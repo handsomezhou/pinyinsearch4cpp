@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/pinyinsearchdemo">
+        <file>res/text_file/contacts.txt</file>
+    </qresource>
+</RCC>

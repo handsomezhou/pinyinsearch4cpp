@@ -16,3 +16,7 @@ SOURCES += main.cpp\
         pinyinsearchdemo.cpp
 
 HEADERS  += pinyinsearchdemo.h
+
+RESOURCES += \
+    res.qrc
+
