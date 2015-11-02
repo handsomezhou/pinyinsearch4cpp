@@ -14,15 +14,17 @@
  * limitations under the License.
  */
 
-#ifndef PINYINSEARCH_GLOBAL_H
-#define PINYINSEARCH_GLOBAL_H
+#ifndef PINYINUTIL_H
+#define PINYINUTIL_H
+#include <QChar>
+#include <QString>
 
-#include <QtCore/qglobal.h>
-
-#if defined(PINYINSEARCH_LIBRARY)
-#  define PINYINSEARCHSHARED_EXPORT Q_DECL_EXPORT
-#else
-#  define PINYINSEARCHSHARED_EXPORT Q_DECL_IMPORT
-#endif
-
-#endif // PINYINSEARCH_GLOBAL_H
+class PinyinUtil{
+public:
+    static void parse(PinyinSearchUnit pinyinSearchUnit);
+    static QString getFirstLetter(PinyinSearchUnit pinyinSearchUnit);
+    static QString getFirstCharacter(PinyinSearchUnit pinyinSearchUnit);
+    static QString getSortKey(PinyinSearchUnit pinyinSearchUnit);
+    static bool isKanji(QChar chr);
+}
+#endif // PINYINUTIL_H

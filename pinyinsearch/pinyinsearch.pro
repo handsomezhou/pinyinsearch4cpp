@@ -11,10 +11,16 @@ TEMPLATE = lib
 
 DEFINES += PINYINSEARCH_LIBRARY
 
-SOURCES += pinyinsearch.cpp
+SOURCES += \
+    T9Util.cpp \
+    QwertyUtil.cpp \
+    PinyinUtil.cpp
 
-HEADERS += pinyinsearch.h\
-        pinyinsearch_global.h
+HEADERS +=\
+        pinyinsearch_global.h \
+    T9Util.h \
+    QwertyUtil.h \
+    PinyinUtil.h
 
 unix {
     target.path = /usr/lib

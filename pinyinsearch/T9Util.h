@@ -14,15 +14,14 @@
  * limitations under the License.
  */
 
-#ifndef PINYINSEARCH_GLOBAL_H
-#define PINYINSEARCH_GLOBAL_H
-
-#include <QtCore/qglobal.h>
-
-#if defined(PINYINSEARCH_LIBRARY)
-#  define PINYINSEARCHSHARED_EXPORT Q_DECL_EXPORT
-#else
-#  define PINYINSEARCHSHARED_EXPORT Q_DECL_IMPORT
-#endif
-
-#endif // PINYINSEARCH_GLOBAL_H
+#ifndef T9UTIL_H
+#define T9UTIL_H
+#include <QChar>
+#include <QString>
+class T9Util
+{
+public:
+    static QChar getT9Number(QChar alphabet);
+    static bool match(PinyinSearchUnit pinyinSearchUnit,QString search);
+};
+#endif // T9UTIL_H

@@ -14,15 +14,10 @@
  * limitations under the License.
  */
 
-#ifndef PINYINSEARCH_GLOBAL_H
-#define PINYINSEARCH_GLOBAL_H
+#include "QwertyUtil.h"
 
-#include <QtCore/qglobal.h>
+bool QwertyUtil::match(PinyinSearchUnit pinyinSearchUnit, QString search)
+{
 
-#if defined(PINYINSEARCH_LIBRARY)
-#  define PINYINSEARCHSHARED_EXPORT Q_DECL_EXPORT
-#else
-#  define PINYINSEARCHSHARED_EXPORT Q_DECL_IMPORT
-#endif
-
-#endif // PINYINSEARCH_GLOBAL_H
+    return false;
+}

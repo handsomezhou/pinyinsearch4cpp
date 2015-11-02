@@ -14,15 +14,13 @@
  * limitations under the License.
  */
 
-#ifndef PINYINSEARCH_GLOBAL_H
-#define PINYINSEARCH_GLOBAL_H
+#ifndef QWERTYUTIL_H
+#define QWERTYUTIL_H
+#include <QString>
 
-#include <QtCore/qglobal.h>
-
-#if defined(PINYINSEARCH_LIBRARY)
-#  define PINYINSEARCHSHARED_EXPORT Q_DECL_EXPORT
-#else
-#  define PINYINSEARCHSHARED_EXPORT Q_DECL_IMPORT
-#endif
-
-#endif // PINYINSEARCH_GLOBAL_H
+class QwertyUtil
+{
+public:
+   static bool match(PinyinSearchUnit pinyinSearchUnit,QString search);
+};
+#endif // QWERTYUTIL_H
