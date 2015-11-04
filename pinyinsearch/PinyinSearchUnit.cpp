@@ -14,10 +14,3 @@
  * limitations under the License.
  */
 
-#include "QwertyUtil.h"
-
-bool QwertyUtil::match(PinyinSearchUnit &pinyinSearchUnit, QString &search)
-{
-
-    return false;
-}

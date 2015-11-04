@@ -21,7 +21,7 @@
  * @param alphabet
  * @return
  */
-QChar T9Util::getT9Number(QChar alphabet)
+QChar T9Util::getT9Number(QChar &alphabet)
 {
     /**
      * T9 keyboard
@@ -116,14 +116,16 @@ QChar T9Util::getT9Number(QChar alphabet)
     return ch;
 }
 
+
+
 /**
  * @brief T9Util::match
  * @param pinyinSearchUnit
  * @param search
  * @return true if match success,false otherwise.
  */
-bool T9Util::match(PinyinSearchUnit pinyinSearchUnit, QString search)
-{
 
-    return false;
+bool T9Util::match(PinyinSearchUnit &pinyinSearchUnit, QString &search)
+{
+     return false;
 }

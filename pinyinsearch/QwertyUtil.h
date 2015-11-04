@@ -21,6 +21,6 @@
 class QwertyUtil
 {
 public:
-   static bool match(PinyinSearchUnit pinyinSearchUnit,QString search);
+   static bool match(PinyinSearchUnit &pinyinSearchUnit,QString &search);
 };
 #endif // QWERTYUTIL_H

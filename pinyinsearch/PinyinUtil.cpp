@@ -22,7 +22,7 @@
  * @brief PinyinUtil::parse
  * @param pinyinSearchUnit
  */
-void PinyinUtil::parse(PinyinSearchUnit pinyinSearchUnit)
+void PinyinUtil::parse(PinyinSearchUnit &pinyinSearchUnit)
 {
 
 }
@@ -34,7 +34,7 @@ void PinyinUtil::parse(PinyinSearchUnit pinyinSearchUnit)
  * @param pinyinSearchUnit
  * @return return the first letter of original string,otherwise return null.
  */
-QString PinyinUtil::getFirstLetter(PinyinSearchUnit pinyinSearchUnit)
+QString PinyinUtil::getFirstLetter(PinyinSearchUnit &pinyinSearchUnit)
 {
     return NULL;
 }
@@ -46,9 +46,10 @@ QString PinyinUtil::getFirstLetter(PinyinSearchUnit pinyinSearchUnit)
  * @param pinyinSearchUnit
  * @return return the first character of original string,otherwise return null.
  */
-QString PinyinUtil::getFirstCharacter(PinyinSearchUnit pinyinSearchUnit)
+QString PinyinUtil::getFirstCharacter(PinyinSearchUnit &pinyinSearchUnit)
 {
 
+    return NULL;
 }
 
 /**
@@ -58,9 +59,10 @@ QString PinyinUtil::getFirstCharacter(PinyinSearchUnit pinyinSearchUnit)
  * @param pinyinSearchUnit
  * @return return sort key,otherwise return null.
  */
-QString PinyinUtil::getSortKey(PinyinSearchUnit pinyinSearchUnit)
+QString PinyinUtil::getSortKey(PinyinSearchUnit &pinyinSearchUnit)
 {
 
+    return NULL;
 }
 
 /**
@@ -70,9 +72,10 @@ QString PinyinUtil::getSortKey(PinyinSearchUnit pinyinSearchUnit)
  * @param chr
  * @return Is kanji return true,otherwise return false.
  */
-bool PinyinUtil::isKanji(QChar chr)
+bool PinyinUtil::isKanji(QChar &chr)
 {
 
+    return false;
 }
 
 

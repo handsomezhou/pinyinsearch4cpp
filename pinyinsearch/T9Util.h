@@ -21,7 +21,7 @@
 class T9Util
 {
 public:
-    static QChar getT9Number(QChar alphabet);
-    static bool match(PinyinSearchUnit pinyinSearchUnit,QString search);
+    static QChar getT9Number(QChar &alphabet);
+    static bool match(PinyinSearchUnit &pinyinSearchUnit,QString &search);
 };
 #endif // T9UTIL_H

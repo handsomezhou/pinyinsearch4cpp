@@ -21,10 +21,10 @@
 
 class PinyinUtil{
 public:
-    static void parse(PinyinSearchUnit pinyinSearchUnit);
-    static QString getFirstLetter(PinyinSearchUnit pinyinSearchUnit);
-    static QString getFirstCharacter(PinyinSearchUnit pinyinSearchUnit);
-    static QString getSortKey(PinyinSearchUnit pinyinSearchUnit);
-    static bool isKanji(QChar chr);
+    static void parse(PinyinSearchUnit &pinyinSearchUnit);
+    static QString getFirstLetter(PinyinSearchUnit &pinyinSearchUnit);
+    static QString getFirstCharacter(PinyinSearchUnit &pinyinSearchUnit);
+    static QString getSortKey(PinyinSearchUnit &pinyinSearchUnit);
+    static bool isKanji(QChar &chr);
 }
 #endif // PINYINUTIL_H

@@ -14,10 +14,18 @@
  * limitations under the License.
  */
 
-#include "QwertyUtil.h"
+#ifndef PINYINSEARCHUNIT_H
+#define PINYINSEARCHUNIT_H
+#include <QString>
+#include <QStringBuilder>
+#include "PinyinUnit.h"
 
-bool QwertyUtil::match(PinyinSearchUnit &pinyinSearchUnit, QString &search)
+class PinyinSearchUnit
 {
-
-    return false;
-}
+public:
+    PinyinSearchUnit();
+private:
+    QString baseData;  //the original string
+    QList<PinyinUnit> pinyinUnits;
+};
+#endif // PINYINSEARCHUNIT_H
