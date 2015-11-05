@@ -14,3 +14,47 @@
  * limitations under the License.
  */
 
+#include "PinyinSearchUnit.h"
+
+PinyinSearchUnit::PinyinSearchUnit()
+{
+
+}
+
+PinyinSearchUnit::PinyinSearchUnit(QString baseData)
+{
+    this->baseData=baseData;
+}
+
+QString PinyinSearchUnit::getBaseData() const
+{
+    return this->baseData;
+}
+
+void PinyinSearchUnit::setBaseData(const QString &baseData)
+{
+    this->baseData = baseData;
+}
+
+QList<PinyinUnit> PinyinSearchUnit::getPinyinUnits() const
+{
+    return this->pinyinUnits;
+}
+
+void PinyinSearchUnit::setPinyinUnits(const QList<PinyinUnit> &pinyinUnits)
+{
+    this->pinyinUnits = pinyinUnits;
+}
+
+QString PinyinSearchUnit::getMatchKeyWord() const
+{
+    return this->matchKeyWord;
+}
+
+void PinyinSearchUnit::setMatchKeyWord(const QString &matchKeyWord)
+{
+    this->matchKeyWord = matchKeyWord;
+}
+
+
+

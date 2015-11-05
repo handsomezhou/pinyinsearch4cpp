@@ -17,6 +17,7 @@
 #ifndef QWERTYUTIL_H
 #define QWERTYUTIL_H
 #include <QString>
+#include "PinyinSearchUnit.h"
 
 class QwertyUtil
 {

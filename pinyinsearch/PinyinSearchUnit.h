@@ -24,8 +24,18 @@ class PinyinSearchUnit
 {
 public:
     PinyinSearchUnit();
+    PinyinSearchUnit(QString baseData);
+    QString getBaseData() const;
+    void setBaseData(const QString &baseData);
+    QList<PinyinUnit> getPinyinUnits() const;
+    void setPinyinUnits(const QList<PinyinUnit> &pinyinUnits);
+
+    QString getMatchKeyWord() const;
+    void setMatchKeyWord(const QString &matchKeyWord);
+
 private:
     QString baseData;  //the original string
     QList<PinyinUnit> pinyinUnits;
+    QString matchKeyWord;//the sub string of base data which search by key word;
 };
 #endif // PINYINSEARCHUNIT_H

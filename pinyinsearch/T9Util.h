@@ -18,6 +18,8 @@
 #define T9UTIL_H
 #include <QChar>
 #include <QString>
+#include "PinyinSearchUnit.h"
+
 class T9Util
 {
 public:

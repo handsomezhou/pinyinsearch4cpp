@@ -32,7 +32,7 @@ QChar T9Util::getT9Number(QChar &alphabet)
      */
     QChar ch = alphabet;
 
-    switch (alphabet) {
+    switch (alphabet.unicode()) {
     case 'A':
     case 'a':
     case 'B':

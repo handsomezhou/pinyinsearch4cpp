@@ -60,8 +60,7 @@ PinyinUnit::PinyinUnit()
 {
     this->pinyin=false;
     this->startPosition=-1;
-    this->pinyinBaseUnitIndex=new QList<PinyinBaseUnit>();
-
+    this->pinyinBaseUnitIndex.clear();
 }
 
 bool PinyinUnit::isPinyin() const

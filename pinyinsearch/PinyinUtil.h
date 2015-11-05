@@ -18,6 +18,7 @@
 #define PINYINUTIL_H
 #include <QChar>
 #include <QString>
+#include "PinyinSearchUnit.h"
 
 class PinyinUtil{
 public:
@@ -26,5 +27,5 @@ public:
     static QString getFirstCharacter(PinyinSearchUnit &pinyinSearchUnit);
     static QString getSortKey(PinyinSearchUnit &pinyinSearchUnit);
     static bool isKanji(QChar &chr);
-}
+};
 #endif // PINYINUTIL_H

@@ -59,15 +59,7 @@ void PinyinBaseUnit::setNumber(const QString &number)
     this->number = number;
 
 }
-QString PinyinBaseUnit::getOriginalString() const
-{
-    return originalString;
-}
 
-void PinyinBaseUnit::setOriginalString(const QString &value)
-{
-    originalString = value;
-}
 
 
 
