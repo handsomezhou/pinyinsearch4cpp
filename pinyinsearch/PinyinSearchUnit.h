@@ -27,15 +27,18 @@ public:
     PinyinSearchUnit(QString baseData);
     QString getBaseData() const;
     void setBaseData(const QString &baseData);
-    QList<PinyinUnit> getPinyinUnits() const;
-    void setPinyinUnits(const QList<PinyinUnit> &pinyinUnits);
+
+    QList<PinyinUnit> *getPinyinUnits() const;
+    void setPinyinUnits(QList<PinyinUnit> *pinyinUnits);
 
     QString getMatchKeyWord() const;
     void setMatchKeyWord(const QString &matchKeyWord);
 
+
+
 private:
     QString baseData;  //the original string
-    QList<PinyinUnit> pinyinUnits;
+    QList<PinyinUnit> *pinyinUnits;
     QString matchKeyWord;//the sub string of base data which search by key word;
 };
 #endif // PINYINSEARCHUNIT_H

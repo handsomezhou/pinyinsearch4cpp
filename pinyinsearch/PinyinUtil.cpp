@@ -15,6 +15,9 @@
  */
 
 #include "PinyinUtil.h"
+#include "PinyinUnit.h"
+#include "../../pinyin4cpp/pinyin4cpp/HanyuPinyinCaseType.h"
+#include "../../pinyin4cpp/pinyin4cpp/PinyinHelper.h"
 
 /**
  * Convert from base data to a series of PinyinUnit
@@ -24,7 +27,69 @@
  */
 void PinyinUtil::parse(PinyinSearchUnit &pinyinSearchUnit)
 {
+    if(pinyinSearchUnit.getBaseData().isEmpty()||pinyinSearchUnit.getPinyinUnits().isEmpty()){
+       return;
+    }
 
+    QString chineseStr=pinyinSearchUnit.getBaseData().toLower();
+    if(NULL==format){
+        format=new HanyuPinyinOutputFormat();
+    }
+
+    format->setToneType(*(HanyuPinyinToneType::WITHOUT_TONE));
+
+    int chineseStringLength=chineseStr.length();
+    QString nonPinyinString;
+    PinyinUnit *pyUnit=NULL;
+    QString originalString;
+    QList<QString> *pinyinList=new QList<QString>();
+    bool lastChineseCharacters = true;
+    int startPosition = -1;
+    QChar ch;
+
+    for(int i=0; i<chineseStringLength; i++){
+        ch=chineseStr.at(i);
+        PinyinHelper::toHanyuPinyinStringArray(ch,format,pinyinList);
+        if(0==pinyinList->size()){
+            if (true == lastChineseCharacters) {
+                pyUnit = new PinyinUnit();
+                lastChineseCharacters = false;
+                startPosition = i;
+                nonPinyinString.clear();
+            }
+            nonPinyinString.append(ch);
+        } else {
+            if (false == lastChineseCharacters) {
+                // add continuous non-kanji characters to PinyinUnit
+                originalString = nonPinyinString;
+                QList<QString> *str=new QList<QString>();
+                str->append(nonPinyinString);
+                PinyinUtil::addPinyinUnit(pinyinSearchUnit.getPinyinUnits(), pyUnit, false, originalString,str, startPosition);
+                nonPinyinString.clear();
+                lastChineseCharacters = true;
+            }
+            // add single Chinese characters Pinyin(include Multiple Pinyin)
+            // to PinyinUnit
+            pyUnit = new PinyinUnit();
+            startPosition = i;
+            originalString =ch;
+
+            PinyinUtil::addPinyinUnit(pinyinSearchUnit.getPinyinUnits(), pyUnit, true, originalString,pinyinList, startPosition);
+
+        }
+    }
+
+        if (false == lastChineseCharacters) {
+            // add continuous non-kanji characters to PinyinUnit
+            originalString = nonPinyinString;
+            QList<QString> *str=new QList<QString>();
+            str->append(nonPinyinString);
+            PinyinUtil::addPinyinUnit(pinyinSearchUnit.getPinyinUnits(), pyUnit, false, originalString, str,startPosition);
+            nonPinyinString.clear();
+            lastChineseCharacters = true;
+        }
+
+    return;
 }
 
 /**
@@ -78,4 +143,10 @@ bool PinyinUtil::isKanji(QChar &chr)
     return false;
 }
 
+void PinyinUtil::addPinyinUnit(QList<PinyinUnit> *pinyinUnit, PinyinUnit *pyUnit, bool pinyin, QString originalString, QList<QString> *string, int startPosition)
+{
 
+}
+
+
+HanyuPinyinOutputFormat* PinyinUtil::format=new HanyuPinyinOutputFormat();
