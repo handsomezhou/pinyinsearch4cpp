@@ -18,6 +18,7 @@
 #include "PinyinUnit.h"
 #include "../../pinyin4cpp/pinyin4cpp/HanyuPinyinCaseType.h"
 #include "../../pinyin4cpp/pinyin4cpp/PinyinHelper.h"
+#include "../../pinyin4cpp/pinyin4cpp/HanyuPinyinToneType.h"
 
 /**
  * Convert from base data to a series of PinyinUnit
@@ -27,7 +28,7 @@
  */
 void PinyinUtil::parse(PinyinSearchUnit &pinyinSearchUnit)
 {
-    if(pinyinSearchUnit.getBaseData().isEmpty()||pinyinSearchUnit.getPinyinUnits().isEmpty()){
+    if((pinyinSearchUnit.getBaseData().isEmpty())||(NULL==pinyinSearchUnit.getPinyinUnits())){
        return;
     }
 
@@ -36,7 +37,7 @@ void PinyinUtil::parse(PinyinSearchUnit &pinyinSearchUnit)
         format=new HanyuPinyinOutputFormat();
     }
 
-    format->setToneType(*(HanyuPinyinToneType::WITHOUT_TONE));
+    format->setToneType((HanyuPinyinToneType::WITHOUT_TONE));
 
     int chineseStringLength=chineseStr.length();
     QString nonPinyinString;
