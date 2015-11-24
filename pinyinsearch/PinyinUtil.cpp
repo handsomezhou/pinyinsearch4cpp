@@ -16,6 +16,7 @@
 
 #include "PinyinUtil.h"
 #include "PinyinUnit.h"
+#include "T9Util.h"
 #include "../../pinyin4cpp/pinyin4cpp/HanyuPinyinCaseType.h"
 #include "../../pinyin4cpp/pinyin4cpp/PinyinHelper.h"
 #include "../../pinyin4cpp/pinyin4cpp/HanyuPinyinToneType.h"
@@ -146,7 +147,81 @@ bool PinyinUtil::isKanji(QChar &chr)
 
 void PinyinUtil::addPinyinUnit(QList<PinyinUnit> *pinyinUnit, PinyinUnit *pyUnit, bool pinyin, QString originalString, QList<QString> *string, int startPosition)
 {
+    if((NULL==pinyinUnit)||(NULL==pyUnit)||(NULL==originalString)||(NULL==string)){
+        return;
+    }
+    PinyinUtil::initPinyinUnit(pyUnit,pinyin,originalString,string,startPosition);
+    pinyinUnit->append(*pyUnit);
 
+    return;
+}
+
+void PinyinUtil::initPinyinUnit(PinyinUnit *pyUnit, bool pinyin, QString originalString, QList<QString> *string, int startPosition)
+{
+    if((NULL==pyUnit)||(NULL==originalString)||(NULL==string)){
+        return;
+    }
+    int i = 0;
+    int j = 0;
+    int k = 0;
+    int strLength = string->length();
+    pyUnit->setPinyin(pinyin);
+    pyUnit->setStartPosition(startPosition);
+
+    PinyinBaseUnit *pinyinBaseUnit=NULL;
+
+    if (false == pinyin || strLength <= 1) {// no more than one pinyin
+        for (i = 0; i < strLength; i++) {
+            pinyinBaseUnit = new PinyinBaseUnit();
+            PinyinUtil::initPinyinBaseUnit(pinyinBaseUnit, originalString, string->at(i));
+            pyUnit->getPinyinBaseUnitIndex().append(*pinyinBaseUnit);
+        }
+    } else { // more than one pinyin.//we must delete the same pinyin
+                        // string,because pinyin without tone.
+
+            pinyinBaseUnit = new PinyinBaseUnit();
+            PinyinUtil::initPinyinBaseUnit(pinyinBaseUnit, originalString, string->at(0));
+            pyUnit->getPinyinBaseUnitIndex().append(*pinyinBaseUnit);
+            for (j = 1; j < strLength; j++) {
+                int curStringIndexlength = pyUnit->getPinyinBaseUnitIndex().size();
+                for (k = 0; k < curStringIndexlength; k++) {
+                    if (pyUnit->getPinyinBaseUnitIndex().at(k).getPinyin().compare(string->at(j))==0) {
+                        break;
+                    }
+                }
+
+                if (k == curStringIndexlength) {
+                    pinyinBaseUnit = new PinyinBaseUnit();
+                    PinyinUtil::initPinyinBaseUnit(pinyinBaseUnit, originalString, string->at(j));
+                    pyUnit->getPinyinBaseUnitIndex().append(*pinyinBaseUnit);
+                }
+            }
+    }
+
+    return;
+}
+
+void PinyinUtil::initPinyinBaseUnit(PinyinBaseUnit *pinyinBaseUnit, QString originalString, QString pinyin)
+{
+    if((NULL==pinyinBaseUnit)||(NULL==originalString)||(NULL==pinyin)){
+        return;
+    }
+
+    pinyinBaseUnit->setOriginalString( QString(originalString));
+    pinyinBaseUnit->setPinyin(QString(pinyin));
+    int pinyinLength = pinyin.length();
+
+    QString numberStr;
+
+    for (int i = 0; i < pinyinLength; i++) {
+        QChar alphabet=pinyin.at(i);
+        QChar ch = T9Util::getT9Number(alphabet);
+        numberStr.append(ch);
+    }
+
+    pinyinBaseUnit->setNumber(QString(numberStr));
+
+    return;
 }
 
 
