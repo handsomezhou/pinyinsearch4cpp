@@ -19,8 +19,10 @@
 #include <QString>
 #include <QStringBuilder>
 #include "PinyinUnit.h"
+#include "pinyinsearch_global.h"
 
-class PinyinSearchUnit
+
+class PINYINSEARCHSHARED_EXPORT PinyinSearchUnit
 {
 public:
     PinyinSearchUnit();
