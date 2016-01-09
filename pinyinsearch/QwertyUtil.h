@@ -19,7 +19,7 @@
 #include <QString>
 #include "PinyinSearchUnit.h"
 
-class QwertyUtil
+class PINYINSEARCHSHARED_EXPORT QwertyUtil
 {
 public:
    static bool match(PinyinSearchUnit &pinyinSearchUnit,QString &search);

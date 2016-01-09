@@ -27,14 +27,15 @@ class PINYINSEARCHSHARED_EXPORT PinyinSearchUnit
 public:
     PinyinSearchUnit();
     PinyinSearchUnit(QString baseData);
-    QString getBaseData() const;
+    QString &getBaseData();
     void setBaseData(const QString &baseData);
 
     QList<PinyinUnit> *getPinyinUnits() const;
     void setPinyinUnits(QList<PinyinUnit> *pinyinUnits);
 
-    QString getMatchKeyWord() const;
+    QString &getMatchKeyWord();
     void setMatchKeyWord(const QString &matchKeyWord);
+    void show();//just for test
 
 
 

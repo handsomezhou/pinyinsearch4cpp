@@ -11,7 +11,10 @@ public:
     Contacts(QString id,QString name,QString phoneNumber):BaseContacts(id,name,phoneNumber){
         namePinyinSearchUnit=new PinyinSearchUnit();
     }
+    PinyinSearchUnit *getNamePinyinSearchUnit() const;
+    void setNamePinyinSearchUnit(PinyinSearchUnit *namePinyinSearchUnit);
+
 private:
-    PinyinSearchUnit *namePinyinSearchUnit;// save the mName converted to Pinyin characters.
+    PinyinSearchUnit *namePinyinSearchUnit;// save the name converted to Pinyin characters.
 };
 #endif // CONTACTS_H

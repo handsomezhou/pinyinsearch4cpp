@@ -15,6 +15,7 @@
  */
 
 #include "PinyinSearchUnit.h"
+#include <QDebug>
 
 PinyinSearchUnit::PinyinSearchUnit()
 {
@@ -27,7 +28,7 @@ PinyinSearchUnit::PinyinSearchUnit(QString baseData)
     this->pinyinUnits=new  QList<PinyinUnit>();
 }
 
-QString PinyinSearchUnit::getBaseData() const
+QString &PinyinSearchUnit::getBaseData()
 {
     return this->baseData;
 }
@@ -47,7 +48,7 @@ void PinyinSearchUnit::setPinyinUnits(QList<PinyinUnit> *pinyinUnits)
     this->pinyinUnits = pinyinUnits;
 }
 
-QString PinyinSearchUnit::getMatchKeyWord() const
+QString &PinyinSearchUnit::getMatchKeyWord()
 {
     return this->matchKeyWord;
 }
@@ -55,6 +56,21 @@ QString PinyinSearchUnit::getMatchKeyWord() const
 void PinyinSearchUnit::setMatchKeyWord(const QString &matchKeyWord)
 {
     this->matchKeyWord = matchKeyWord;
+}
+
+void PinyinSearchUnit::show()
+{
+     qDebug()<<"getBaseData["<<this->getBaseData()<<"]this->getPinyinUnits()->size()["<<this->getPinyinUnits()->size()<<"]MatchKeyWord["<<this->getMatchKeyWord()<<"]";
+    QList<PinyinUnit> *pinyinUnitList= this->getPinyinUnits();
+
+    for(int i=0; i<pinyinUnitList->length(); i++){
+        qDebug()<<"isPinyin["<<pinyinUnitList->at(i).isPinyin()<<"]StartPosition["<<pinyinUnitList->at(i).getStartPosition()<<"]pinyinUnitList->at(i).getPinyinBaseUnitIndex()["<<pinyinUnitList->at(i).getPinyinBaseUnitIndex()->length()<<"]";
+        QList<PinyinBaseUnit> *pinyinBaseUnitQList=pinyinUnitList->at(i).getPinyinBaseUnitIndex();
+        for(int j=0; j<pinyinBaseUnitQList->length();j++){
+            qDebug()<<"originalString["<<pinyinBaseUnitQList->at(j).getOriginalString()<<"]Pinyin["<<pinyinBaseUnitQList->at(j).getPinyin()<<"]Number["<<pinyinBaseUnitQList->at(j).getNumber()<<"]";
+        }
+    }
+     qDebug()<<"****************************************************";
 }
 
 

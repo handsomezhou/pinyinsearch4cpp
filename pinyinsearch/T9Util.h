@@ -20,10 +20,12 @@
 #include <QString>
 #include "PinyinSearchUnit.h"
 
-class T9Util
+class PINYINSEARCHSHARED_EXPORT T9Util
 {
 public:
     static QChar getT9Number(QChar &alphabet);
     static bool match(PinyinSearchUnit &pinyinSearchUnit,QString &search);
+private:
+    static bool findPinyinUnits(QList<PinyinUnit> *pPinyinUnits,int pinyinUnitIndex,int t9PinyinUnitIndex,QString *baseData, QString *pSearchString,QString *pKeyWord );
 };
 #endif // T9UTIL_H

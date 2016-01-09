@@ -28,8 +28,10 @@ public:
     int getStartPosition() const;
     void setStartPosition(int startPosition);
 
-    QList<PinyinBaseUnit> getPinyinBaseUnitIndex() const;
-    void setPinyinBaseUnitIndex(const QList<PinyinBaseUnit> &pinyinBaseUnitIndex);
+//    QList<PinyinBaseUnit> getPinyinBaseUnitIndex() const;
+//    void setPinyinBaseUnitIndex(const QList<PinyinBaseUnit> &pinyinBaseUnitIndex);
+    QList<PinyinBaseUnit> *getPinyinBaseUnitIndex() const;
+    void setPinyinBaseUnitIndex(QList<PinyinBaseUnit> *pinyinBaseUnitIndex);
 
 private:
     bool pinyin;//whether pinyin
@@ -38,6 +40,6 @@ private:
      * save the string which single Chinese characters Pinyin(include Multiple Pinyin),or continuous non-kanji characters.
      * if mPinyinBaseUnitIndex.size not more than 1, it means the is not Polyphonic characters.
      */
-    QList<PinyinBaseUnit> pinyinBaseUnitIndex;
+    QList<PinyinBaseUnit> *pinyinBaseUnitIndex;
 };
 #endif // PINYINUNIT_H

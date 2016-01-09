@@ -15,6 +15,7 @@
  */
 
 #include "T9Util.h"
+#include <QDebug>
 
 /**
  * @brief T9Util::getT9Number
@@ -127,5 +128,44 @@ QChar T9Util::getT9Number(QChar &alphabet)
 
 bool T9Util::match(PinyinSearchUnit &pinyinSearchUnit, QString &search)
 {
-     return false;
+    qDebug()<<"@@==@"<<pinyinSearchUnit.getBaseData();
+    qDebug()<<"@@=@"<<pinyinSearchUnit.getMatchKeyWord();
+    if((NULL==pinyinSearchUnit.getBaseData())/*||(NULL==pinyinSearchUnit.getMatchKeyWord())*/){
+        return false;
+    }
+    pinyinSearchUnit.getMatchKeyWord().clear();
+    qDebug()<<"+++"<<pinyinSearchUnit.getMatchKeyWord();
+    int pinyinUnitsLength=pinyinSearchUnit.getPinyinUnits()->size();
+    QString *pSearchString=new QString();
+    for(int i=0; i<pinyinUnitsLength; i++){
+        int j=0;
+        pinyinSearchUnit.getMatchKeyWord().clear();
+        pSearchString->clear();
+        pSearchString->append(search);
+        QString baseData;
+        QString matchKeyWord;
+        bool found= T9Util::findPinyinUnits(pinyinSearchUnit.getPinyinUnits(),i,j,&baseData/*pinyinSearchUnit.getBaseData()*/,pSearchString,&matchKeyWord/*pinyinSearchUnit.getMatchKeyWord()*/);
+        if (true == found){
+            return true;
+        }
+    }
+
+
+    return false;
+}
+
+/**
+ * @brief T9Util::findPinyinUnits
+ * @param pinyinUnits       pinyinUnits head node index
+ * @param pinyinUnitIndex   pinyinUint Index
+ * @param t9PinyinUnitIndex t9PinyinUnit Index
+ * @param pBaseData         base data for search.
+ * @param pSearchString     search keyword.
+ * @param pKeyWord          save the Chinese keyword.
+ * @return                  true if find,false otherwise.
+ */
+bool T9Util::findPinyinUnits(QList<PinyinUnit> *pPinyinUnits, int pinyinUnitIndex, int t9PinyinUnitIndex, QString *baseData, QString *pSearchString, QString *pKeyWord)
+{
+
+    return false;
 }

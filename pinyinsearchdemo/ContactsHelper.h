@@ -12,10 +12,12 @@ public:
     void loadContacts();
     QList<Contacts> *getBaseContacts() const;
     void setBaseContacts(QList<Contacts> *baseContacts);
+    void t9Search(QString keyword);
+    void qwertySearch(QString keyword);
 
 private:
     static ContactsHelper* instance;
-    QList <Contacts>* baseContacts;
+    QList <Contacts>* baseContacts=NULL;
     void initContactsHelper();
     void freeContactsHelper();
 

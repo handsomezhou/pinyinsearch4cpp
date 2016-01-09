@@ -22,7 +22,7 @@
 #include "PinyinBaseUnit.h"
 #include "../../pinyin4cpp/HanyuPinyinOutputFormat.h"
 
-class PinyinUtil{
+class PINYINSEARCHSHARED_EXPORT PinyinUtil{
 public:
     static void parse(PinyinSearchUnit &pinyinSearchUnit);
     static QString getFirstLetter(PinyinSearchUnit &pinyinSearchUnit);
