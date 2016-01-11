@@ -3,6 +3,7 @@
 #include "Contacts.h"
 #include "ContactsHelper.h"
 #include "../../pinyinsearch/T9Util.h"
+#include "../../pinyinsearch/QwertyUtil.h"
 #include "../../pinyinsearch/PinyinUtil.h"
 #include "../../pinyinsearch/PinyinSearchUnit.h"
 
@@ -84,7 +85,7 @@ void ContactsHelper::t9Search(QString keyword)
     for(int i=0; i<this->baseContacts->length();i++){
         PinyinSearchUnit *namePinyinSearchUnit=this->getBaseContacts()->at(i).getNamePinyinSearchUnit();
         bool nameMatch=T9Util::match(*namePinyinSearchUnit,keyword);
-        qDebug()<<"nameMatch:"<<nameMatch;
+        qDebug()<<"is nameMatch:"<<nameMatch;
         if(true==nameMatch){
 
         }else{
@@ -97,6 +98,16 @@ void ContactsHelper::t9Search(QString keyword)
 void ContactsHelper::qwertySearch(QString keyword)
 {
     qDebug()<<"qwertySearch keyword["<<keyword<<"]";
+    for(int i=0; i<this->baseContacts->length();i++){
+        PinyinSearchUnit *namePinyinSearchUnit=this->getBaseContacts()->at(i).getNamePinyinSearchUnit();
+        bool nameMatch=QwertyUtil::match(*namePinyinSearchUnit,keyword);
+        qDebug()<<"is nameMatch:"<<nameMatch;
+        if(true==nameMatch){
+
+        }else{
+
+        }
+    }
     return;
 }
 

@@ -9,12 +9,16 @@ PinyinSearchDemo::PinyinSearchDemo(QWidget *parent)
     ContactsHelper::getInstance()->loadContacts();
 
     searchTextEdit=new QTextEdit();
-    searchBtn=new QPushButton("search");
-    connect(searchTextEdit,SIGNAL(textChanged()),this,SLOT(search()));
+    t9SearchBtn=new QPushButton("t9 search");
+    connect(searchTextEdit,SIGNAL(textChanged()),this,SLOT(t9Search()));
+
+    qwertySearchBtn=new QPushButton("qwerty search");
+    connect(searchTextEdit,SIGNAL(textChanged()),this,SLOT(qwertySearch()));
 
     QHBoxLayout *inputLayout=new QHBoxLayout;
     inputLayout->addWidget(this->searchTextEdit);
-    inputLayout->addWidget(this->searchBtn);
+    inputLayout->addWidget(this->t9SearchBtn);
+    inputLayout->addWidget(this->qwertySearchBtn);
 
     QVBoxLayout *mainLayout=new QVBoxLayout;
     mainLayout->addLayout(inputLayout);
@@ -26,7 +30,7 @@ PinyinSearchDemo::~PinyinSearchDemo()
 
 }
 
-void PinyinSearchDemo::search()
+void PinyinSearchDemo::t9Search()
 {
     QString inputString=this->searchTextEdit->toPlainText();
     if(!inputString.isEmpty()){
@@ -34,7 +38,16 @@ void PinyinSearchDemo::search()
     }
 
     ContactsHelper::getInstance()->t9Search(inputString);
-//    for(int i=0; i<ContactsHelper::getInstance()->getBaseContacts()->length(); i++){
-//        qDebug()<<"["<<ContactsHelper::getInstance()->getBaseContacts()->at(i).getName()<<"]["<<ContactsHelper::getInstance()->getBaseContacts()->at(i).getPhoneNumber()+"]";
-//    }
+
+}
+
+void PinyinSearchDemo::qwertySearch()
+{
+    QString inputString=this->searchTextEdit->toPlainText();
+    if(!inputString.isEmpty()){
+       qDebug()<<"["<<inputString<<"]";
+    }
+
+    ContactsHelper::getInstance()->qwertySearch(inputString);
+
 }
