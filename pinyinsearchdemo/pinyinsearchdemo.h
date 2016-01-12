@@ -13,11 +13,11 @@ public:
     PinyinSearchDemo(QWidget *parent = 0);
     ~PinyinSearchDemo();
 private slots:
-    void t9Search();
+    void t9Search(const QString &keyword);
     void qwertySearch();
+    void slot_inputTextEditText(const QString &);
 private:
     QTextEdit *searchTextEdit;
-    QPushButton *t9SearchBtn;
     QPushButton *qwertySearchBtn;
 };
 

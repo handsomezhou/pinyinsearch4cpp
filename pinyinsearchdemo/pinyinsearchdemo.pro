@@ -16,12 +16,16 @@ SOURCES += main.cpp\
         pinyinsearchdemo.cpp \
     BaseContacts.cpp \
     Contacts.cpp \
-    ContactsHelper.cpp
+    ContactsHelper.cpp \
+    ContactsListModel.cpp \
+    T9KeyboardWidget.cpp
 
 HEADERS  += pinyinsearchdemo.h \
     BaseContacts.h \
     Contacts.h \
-    ContactsHelper.h
+    ContactsHelper.h \
+    ContactsListModel.h \
+    T9KeyboardWidget.h
 
 RESOURCES += \
     res.qrc
