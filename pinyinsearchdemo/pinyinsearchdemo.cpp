@@ -4,6 +4,9 @@
 #include "ContactsHelper.h"
 #include "T9KeyboardWidget.h"
 
+#include <QListView>
+#include <QStringListModel>
+
 PinyinSearchDemo::PinyinSearchDemo(QWidget *parent)
     : QWidget(parent)
 {
@@ -19,12 +22,29 @@ PinyinSearchDemo::PinyinSearchDemo(QWidget *parent)
     //connect(t9KeyboardWidget, SIGNAL(s_nameText(const QString &)), this, SLOT(slot_nameClicked(const QString &)));
     connect(t9KeyboardWidget, SIGNAL(signals_InputTextEditText(const QString &)), this, SLOT(t9Search(const QString &)));
 
-    inputLayout->addWidget(t9KeyboardWidget);
-    inputLayout->addWidget(this->searchTextEdit);
-    inputLayout->addWidget(this->qwertySearchBtn);
+
+    QListView list;
+    QStringListModel model;
+    QStringList strings;
+
+    strings << "foo" << "bar" << "baz";
+
+    model.setStringList( strings );
+    list.setModel( &model );
+
+
+    //list.show();
+
+    inputLayout->addWidget(&list,0,0);
+//    inputLayout->addWidget(t9KeyboardWidget);
+//    inputLayout->addWidget(this->searchTextEdit);
+//    inputLayout->addWidget(this->qwertySearchBtn);
+
+
 
     QVBoxLayout *mainLayout=new QVBoxLayout;
     mainLayout->addLayout(inputLayout);
+
     setLayout(mainLayout);
 }
 

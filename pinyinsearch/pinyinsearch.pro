@@ -45,3 +45,10 @@ else:unix: LIBS += -L$$PWD/../../pinyin4cpp/build-pinyin4cpp-MinGW_Custom-Debug/
 
 INCLUDEPATH += $$PWD/../../pinyin4cpp/build-pinyin4cpp-MinGW_Custom-Debug/debug
 DEPENDPATH += $$PWD/../../pinyin4cpp/build-pinyin4cpp-MinGW_Custom-Debug/debug
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../pinyin4cpp/build-pinyin4cpp-Desktop_Qt_5_2_1_MinGW_32bit-Debug/release/ -lpinyin4cpp
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../pinyin4cpp/build-pinyin4cpp-Desktop_Qt_5_2_1_MinGW_32bit-Debug/debug/ -lpinyin4cpp
+else:unix: LIBS += -L$$PWD/../../pinyin4cpp/build-pinyin4cpp-Desktop_Qt_5_2_1_MinGW_32bit-Debug/ -lpinyin4cpp
+
+INCLUDEPATH += $$PWD/../../pinyin4cpp/build-pinyin4cpp-Desktop_Qt_5_2_1_MinGW_32bit-Debug/debug
+DEPENDPATH += $$PWD/../../pinyin4cpp/build-pinyin4cpp-Desktop_Qt_5_2_1_MinGW_32bit-Debug/debug
