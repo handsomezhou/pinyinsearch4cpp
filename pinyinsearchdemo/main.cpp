@@ -9,6 +9,7 @@
 #include "../../pinyinsearch/QwertyUtil.h"
 #include "../../pinyinsearch/PinyinUtil.h"
 #include "../../pinyinsearch/PinyinSearchUnit.h"
+#include "ContactsItemDelegate.h"
 
 int main(int argc, char *argv[])
 {
@@ -37,7 +38,9 @@ int main(int argc, char *argv[])
     ContactsListModel contactsListModel;
     contactsListModel.setContacts(pContacts);
     list.setModel( &contactsListModel );
-   // list.setItemDelegate();
+
+
+    list.setItemDelegate(new ContactsItemDelegate());
     list.show();
 
      QStringListModel model;
