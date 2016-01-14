@@ -35,16 +35,20 @@ int main(int argc, char *argv[])
     }
 
     ContactsListModel contactsListModel;
-//    contactsListModel.set
+    contactsListModel.setContacts(pContacts);
+    list.setModel( &contactsListModel );
+   // list.setItemDelegate();
+    list.show();
 
+     QStringListModel model;
+    /*
     QStringListModel model;
     QStringList strings;
-
     strings << "foo" << "bar" << "baz";
-
     model.setStringList( strings );
     list.setModel( &model );
-
     list.show();
+    */
+
     return a.exec();
 }
