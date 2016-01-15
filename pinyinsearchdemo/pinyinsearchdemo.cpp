@@ -23,6 +23,7 @@ PinyinSearchDemo::PinyinSearchDemo(QWidget *parent)
     connect(t9KeyboardWidget, SIGNAL(signals_InputTextEditText(const QString &)), this, SLOT(t9Search(const QString &)));
 
 
+    /*
     QListView list;
     QStringListModel model;
     QStringList strings;
@@ -31,14 +32,14 @@ PinyinSearchDemo::PinyinSearchDemo(QWidget *parent)
 
     model.setStringList( strings );
     list.setModel( &model );
-
+    */
 
     //list.show();
 
-    inputLayout->addWidget(&list,0,0);
-//    inputLayout->addWidget(t9KeyboardWidget);
-//    inputLayout->addWidget(this->searchTextEdit);
-//    inputLayout->addWidget(this->qwertySearchBtn);
+    //inputLayout->addWidget(&list,0,0);
+    inputLayout->addWidget(t9KeyboardWidget);
+    inputLayout->addWidget(this->searchTextEdit);
+    inputLayout->addWidget(this->qwertySearchBtn);
 
 
 

@@ -14,9 +14,9 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-//    PinyinSearchDemo w;
-//    w.show();
-
+    PinyinSearchDemo w;
+    w.show();
+/*
     QListView list;
 
     QList<Contacts> *pContacts=new QList<Contacts>();
@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
     list.setItemDelegate(new ContactsItemDelegate());
     list.show();
 
-     QStringListModel model;
+*/
     /*
     QStringListModel model;
     QStringList strings;
