@@ -21,7 +21,7 @@
 #include "../../pinyin4cpp/pinyin4cpp/PinyinHelper.h"
 #include "../../pinyin4cpp/pinyin4cpp/HanyuPinyinToneType.h"
 #include "PinyinBaseUnit.h"
-#include <QDebug>
+//#include <QDebug>
 
 /**
  * Convert from base data to a series of PinyinUnit
@@ -37,9 +37,9 @@ void PinyinUtil::parse(PinyinSearchUnit &pinyinSearchUnit)
        return;
     }
 
-    qDebug()<<"__FILE__"<<__FILE__<<"; __FUNCTION__"<< __FUNCTION__<<";__LINE__"<<__LINE__<<";["<<pinyinSearchUnit.getBaseData()<<"]";
+    //qDebug()<<"__FILE__"<<__FILE__<<"; __FUNCTION__"<< __FUNCTION__<<";__LINE__"<<__LINE__<<";["<<pinyinSearchUnit.getBaseData()<<"]";
     QString chineseStr=pinyinSearchUnit.getBaseData().toLower();
-    qDebug()<<"__FILE__"<<__FILE__<<"; __FUNCTION__"<< __FUNCTION__<<";__LINE__"<<__LINE__<<";["<<chineseStr<<"]";
+    //qDebug()<<"__FILE__"<<__FILE__<<"; __FUNCTION__"<< __FUNCTION__<<";__LINE__"<<__LINE__<<";["<<chineseStr<<"]";
 
     if(NULL==format){
         format=new HanyuPinyinOutputFormat();
@@ -55,15 +55,15 @@ void PinyinUtil::parse(PinyinSearchUnit &pinyinSearchUnit)
     bool lastChineseCharacters = true;
     int startPosition = -1;
     QChar ch;
-    qDebug()<<"__FILE__"<<__FILE__<<"; __FUNCTION__"<< __FUNCTION__<<";__LINE__"<<__LINE__<<";["<<chineseStringLength<<"]";
+    //qDebug()<<"__FILE__"<<__FILE__<<"; __FUNCTION__"<< __FUNCTION__<<";__LINE__"<<__LINE__<<";["<<chineseStringLength<<"]";
     for(int i=0; i<chineseStringLength; i++){
-         qDebug()<<"****************************************";
+         //qDebug()<<"****************************************";
         ch=chineseStr.at(i);
         pinyinList->clear();
         PinyinHelper::toHanyuPinyinStringArray(ch,format,pinyinList);
-        qDebug()<<"pinyinList->size()"<<pinyinList->size();
+        //qDebug()<<"pinyinList->size()"<<pinyinList->size();
         for(int k=0; k<pinyinList->size();k++){
-              qDebug()<<"pinyinList"<<k<<":"<<pinyinList->at(k);
+              //qDebug()<<"pinyinList"<<k<<":"<<pinyinList->at(k);
         }
         if(0==pinyinList->size()){
             if (true == lastChineseCharacters) {
@@ -79,7 +79,7 @@ void PinyinUtil::parse(PinyinSearchUnit &pinyinSearchUnit)
                 originalString = nonPinyinString;
                 QList<QString> *str=new QList<QString>();
                 str->append(nonPinyinString);
-                qDebug()<<"originalString111["<<originalString<<"]";
+                //qDebug()<<"originalString111["<<originalString<<"]";
                 PinyinUtil::addPinyinUnit(pinyinSearchUnit.getPinyinUnits(), pyUnit, false, originalString,str, startPosition);
 
                 nonPinyinString.clear();
@@ -90,7 +90,7 @@ void PinyinUtil::parse(PinyinSearchUnit &pinyinSearchUnit)
             pyUnit = new PinyinUnit();
             startPosition = i;
             originalString =ch;
-            qDebug()<<"originalString222["<<originalString<<"]";
+            //qDebug()<<"originalString222["<<originalString<<"]";
             PinyinUtil::addPinyinUnit(pinyinSearchUnit.getPinyinUnits(), pyUnit, true, originalString,pinyinList, startPosition);
 
         }
@@ -101,7 +101,7 @@ void PinyinUtil::parse(PinyinSearchUnit &pinyinSearchUnit)
             originalString = nonPinyinString;
             QList<QString> *str=new QList<QString>();
             str->append(nonPinyinString);
-             qDebug()<<"originalString333["<<originalString<<"]";
+             //qDebug()<<"originalString333["<<originalString<<"]";
             PinyinUtil::addPinyinUnit(pinyinSearchUnit.getPinyinUnits(), pyUnit, false, originalString, str,startPosition);
             nonPinyinString.clear();
             lastChineseCharacters = true;
@@ -174,7 +174,7 @@ void PinyinUtil::addPinyinUnit(QList<PinyinUnit> *pinyinUnit, PinyinUnit *pyUnit
 
 void PinyinUtil::initPinyinUnit(PinyinUnit *pyUnit, bool pinyin, QString originalString, QList<QString> *string, int startPosition)
 {
-     qDebug()<<"+++++pinyin["<<pinyin<<"]originalString["+originalString<<"]startPosition["<<startPosition<<"]";
+     //qDebug()<<"+++++pinyin["<<pinyin<<"]originalString["+originalString<<"]startPosition["<<startPosition<<"]";
 
 
     if((NULL==pyUnit)||(NULL==originalString)||(NULL==string)){
@@ -182,7 +182,7 @@ void PinyinUtil::initPinyinUnit(PinyinUnit *pyUnit, bool pinyin, QString origina
     }
 
     for(int t=0;t<string->size();t++){
-        qDebug()<<"t="<<t<<":"<<string->at(t);
+        //qDebug()<<"t="<<t<<":"<<string->at(t);
     }
     int i = 0;
     int j = 0;
@@ -197,11 +197,11 @@ void PinyinUtil::initPinyinUnit(PinyinUnit *pyUnit, bool pinyin, QString origina
         for (i = 0; i < strLength; i++) {
             pinyinBaseUnit = new PinyinBaseUnit();
             PinyinUtil::initPinyinBaseUnit(pinyinBaseUnit, originalString, string->at(i));
-             qDebug()<<"---"<<pinyinBaseUnit->getPinyin()<<";"<<pinyinBaseUnit->getOriginalString()<<";"<<pinyinBaseUnit->getNumber();
+             //qDebug()<<"---"<<pinyinBaseUnit->getPinyin()<<";"<<pinyinBaseUnit->getOriginalString()<<";"<<pinyinBaseUnit->getNumber();
             pyUnit->getPinyinBaseUnitIndex()->append(*pinyinBaseUnit);
 
         }
-           qDebug()<<"---"<<pyUnit->getPinyinBaseUnitIndex()->size();
+           //qDebug()<<"---"<<pyUnit->getPinyinBaseUnitIndex()->size();
     } else { // more than one pinyin.//we must delete the same pinyin
                         // string,because pinyin without tone.
 
@@ -223,7 +223,7 @@ void PinyinUtil::initPinyinUnit(PinyinUnit *pyUnit, bool pinyin, QString origina
                 }
             }
     }
-    qDebug()<<"pyUnit->getPinyinBaseUnitIndex().size():"<< pyUnit->getPinyinBaseUnitIndex()->size();
+    //qDebug()<<"pyUnit->getPinyinBaseUnitIndex().size():"<< pyUnit->getPinyinBaseUnitIndex()->size();
     return;
 }
 

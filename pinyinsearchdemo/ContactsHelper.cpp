@@ -34,17 +34,17 @@ ContactsHelper *ContactsHelper::getInstance()
 
 void ContactsHelper::loadContacts()
 {
-    for(int i=0;i<1; i++){
-        Contacts cs;
+    for(int i=0;i<10; i++){
+        Contacts *cs = new Contacts();
         //QString name=QString("test周俊tO%1权").arg(i);
         QString name=QString("test周I俊tony%1").arg(i);
         QString phoneNumber=QString("0000000000%1").arg(i);
-        cs.setName(name);
-        cs.setPhoneNumber(phoneNumber);
-        cs.getNamePinyinSearchUnit()->setBaseData(cs.getName());//must init base data before parse
-        PinyinUtil::parse(*cs.getNamePinyinSearchUnit());
-        cs.getNamePinyinSearchUnit()->show();
-        baseContacts->append(cs);
+        cs->setName(name);
+        cs->setPhoneNumber(phoneNumber);
+        cs->getNamePinyinSearchUnit()->setBaseData(cs->getName());//must init base data before parse
+        PinyinUtil::parse(*cs->getNamePinyinSearchUnit());
+        cs->getNamePinyinSearchUnit()->show();
+        m_pBaseContacts->append(cs);
     }
 
     /*
@@ -69,65 +69,241 @@ void ContactsHelper::loadContacts()
     }
     */
 }
-QList<Contacts> *ContactsHelper::getBaseContacts() const
+QList<Contacts*> *ContactsHelper::getBaseContacts()
 {
-    return baseContacts;
+    return  this->m_pBaseContacts;
 }
 
-void ContactsHelper::setBaseContacts(QList<Contacts> *baseContacts)
+void ContactsHelper::setBaseContacts(QList<Contacts*> *pBaseContacts)
 {
-    this->baseContacts = baseContacts;
+    this->m_pBaseContacts = pBaseContacts;
 }
+
+QList<Contacts*> *ContactsHelper::getSearchContacts() const
+{
+    return this->m_pSearchContacts;
+}
+
+void ContactsHelper::setSearchContacts(QList<Contacts*> *pSearchContacts)
+{
+    this->m_pSearchContacts=pSearchContacts;
+}
+
+QString *ContactsHelper::getFirstNoSearchResultInput()
+{
+    return this->m_pFirstNoSearchResultInput;
+}
+
+void ContactsHelper::setFirstNoSearchResultInput(QString *pFirstNoSearchResultInput)
+{
+    this->m_pFirstNoSearchResultInput=pFirstNoSearchResultInput;
+}
+
+
+
 
 void ContactsHelper::t9Search(QString keyword)
 {
-    qDebug()<<"t9Search keyword["<<keyword<<"]";
-    for(int i=0; i<this->baseContacts->length();i++){
-        PinyinSearchUnit *namePinyinSearchUnit=this->getBaseContacts()->at(i).getNamePinyinSearchUnit();
-        bool nameMatch=T9Util::match(*namePinyinSearchUnit,keyword);
-        qDebug()<<"is nameMatch:"<<nameMatch;
+    if(NULL==m_pSearchContacts){
+        m_pSearchContacts=new QList<Contacts*>;
+    }else{
+        m_pSearchContacts->clear();
+    }
+
+    if(NULL==keyword||keyword.isEmpty()){
+        for(int i=0; i<m_pBaseContacts->size(); i++){
+            m_pBaseContacts->at(i)->setSearchByType(SearchByNull);
+            m_pBaseContacts->at(i)->getMatchKeywords()->clear();
+            m_pBaseContacts->at(i)->setMatchStartIndex(-1);
+            m_pBaseContacts->at(i)->setMatchLength(0);
+
+            m_pSearchContacts->append(m_pBaseContacts->at(i));
+        }
+
+        m_pFirstNoSearchResultInput->clear();
+        return;
+    }
+
+
+    if ( m_pFirstNoSearchResultInput->length() > 0) {
+            if (keyword.contains(*m_pFirstNoSearchResultInput)) {
+                qDebug()<<"no need  to search,null!=keyword,m_pFirstNoSearchResultInput->length()="
+                         <<m_pFirstNoSearchResultInput->length()<<"["
+                         <<*m_pFirstNoSearchResultInput<<"]"<<";searchlen="<<keyword.length()<<"["<<keyword<<"]";
+                return;
+            } else {
+                qDebug()<<"delete  m_pFirstNoSearchResultInput, null!=keyword,m_pFirstNoSearchResultInput->length()="
+                         <<m_pFirstNoSearchResultInput->length()<<"["
+                         <<*m_pFirstNoSearchResultInput<<"]"<<";searchlen="<<keyword.length()<<"["<<keyword<<"]";
+               m_pFirstNoSearchResultInput->clear();
+            }
+     }
+
+
+
+    /*
+     search process:
+        1.search by name
+        2 search by phoneNumber
+    */
+
+    for(int i=0; i<this->m_pBaseContacts->length();i++){
+        PinyinSearchUnit *pNamePinyinSearchUnit=ContactsHelper::getInstance()->getBaseContacts()->at(i)->getNamePinyinSearchUnit();
+        bool nameMatch=T9Util::match(*pNamePinyinSearchUnit,keyword);
         if(true==nameMatch){
+            m_pBaseContacts->at(i)->setSearchByType(SearchByName);
+            m_pBaseContacts->at(i)->getMatchKeywords()->clear();
+            m_pBaseContacts->at(i)->getMatchKeywords()->append(pNamePinyinSearchUnit->getMatchKeyWord());
+            m_pBaseContacts->at(i)->setMatchStartIndex(m_pBaseContacts->at(i)->getName().indexOf(m_pBaseContacts->at(i)->getMatchKeywords()));
+            m_pBaseContacts->at(i)->setMatchLength(m_pBaseContacts->at(i)->getMatchKeywords()->length());
+
+            m_pSearchContacts->append(m_pBaseContacts->at(i));
 
         }else{
 
+
+            if(true==m_pBaseContacts->at(i)->getPhoneNumber().contains(keyword)){
+                m_pBaseContacts->at(i)->setSearchByType(SearchByPhoneNumber);
+                m_pBaseContacts->at(i)->getMatchKeywords()->clear();
+                m_pBaseContacts->at(i)->getMatchKeywords()->append(keyword);
+                int matchStartIndex=m_pBaseContacts->at(i)->getPhoneNumber().indexOf(keyword);
+                m_pBaseContacts->at(i)->setMatchStartIndex(matchStartIndex);
+                m_pBaseContacts->at(i)->setMatchLength(keyword.length());
+                m_pSearchContacts->append(m_pBaseContacts->at(i));
+            }
+
         }
     }
+
+    if(m_pSearchContacts->size()<=0){
+        if (m_pSearchContacts->length() <= 0) {
+            m_pFirstNoSearchResultInput->append(keyword);
+            qDebug()<<"no search result,null!=search,mFirstNoSearchResultInput.length()="
+                   <<m_pFirstNoSearchResultInput->length()<<"["
+                   <<*m_pFirstNoSearchResultInput<<"]"<<";searchlen="<<keyword.length()<<"["<<keyword<<"]";
+        }
+    }else{
+        //sort
+    }
+    return;
+
     return;
 }
 
 void ContactsHelper::qwertySearch(QString keyword)
 {
-    qDebug()<<"qwertySearch keyword["<<keyword<<"]";
-    for(int i=0; i<this->baseContacts->length();i++){
-        PinyinSearchUnit *namePinyinSearchUnit=this->getBaseContacts()->at(i).getNamePinyinSearchUnit();
-        bool nameMatch=QwertyUtil::match(*namePinyinSearchUnit,keyword);
+    if(NULL==m_pSearchContacts){
+        m_pSearchContacts=new QList<Contacts*>;
+    }else{
+        m_pSearchContacts->clear();
+    }
+
+    if(NULL==keyword||keyword.isEmpty()){
+        for(int i=0; i<m_pBaseContacts->size(); i++){
+            m_pBaseContacts->at(i)->setSearchByType(SearchByNull);
+            m_pBaseContacts->at(i)->getMatchKeywords()->clear();
+            m_pBaseContacts->at(i)->setMatchStartIndex(-1);
+            m_pBaseContacts->at(i)->setMatchLength(0);
+
+            m_pSearchContacts->append(m_pBaseContacts->at(i));
+        }
+
+        m_pFirstNoSearchResultInput->clear();
+        return;
+    }
+
+
+    if ( m_pFirstNoSearchResultInput->length() > 0) {
+            if (keyword.contains(*m_pFirstNoSearchResultInput)) {
+                qDebug()<<"no need  to search,null!=keyword,m_pFirstNoSearchResultInput->length()="
+                         <<m_pFirstNoSearchResultInput->length()<<"["
+                         <<*m_pFirstNoSearchResultInput<<"]"<<";searchlen="<<keyword.length()<<"["<<keyword<<"]";
+                return;
+            } else {
+                qDebug()<<"delete  m_pFirstNoSearchResultInput, null!=keyword,m_pFirstNoSearchResultInput->length()="
+                         <<m_pFirstNoSearchResultInput->length()<<"["
+                         <<*m_pFirstNoSearchResultInput<<"]"<<";searchlen="<<keyword.length()<<"["<<keyword<<"]";
+               m_pFirstNoSearchResultInput->clear();
+            }
+     }
+
+
+
+    /*
+     search process:
+        1.search by name
+        2 search by phoneNumber
+    */
+
+    for(int i=0; i<this->m_pBaseContacts->length();i++){
+        PinyinSearchUnit *pNamePinyinSearchUnit=ContactsHelper::getInstance()->getBaseContacts()->at(i)->getNamePinyinSearchUnit();
+        bool nameMatch=QwertyUtil::match(*pNamePinyinSearchUnit,keyword);
         qDebug()<<"is nameMatch:"<<nameMatch;
         if(true==nameMatch){
+            m_pBaseContacts->at(i)->setSearchByType(SearchByName);
+            m_pBaseContacts->at(i)->getMatchKeywords()->clear();
+            m_pBaseContacts->at(i)->getMatchKeywords()->append(pNamePinyinSearchUnit->getMatchKeyWord());
+            m_pBaseContacts->at(i)->setMatchStartIndex(m_pBaseContacts->at(i)->getName().indexOf(m_pBaseContacts->at(i)->getMatchKeywords()));
+            m_pBaseContacts->at(i)->setMatchLength(m_pBaseContacts->at(i)->getMatchKeywords()->length());
+
+            m_pSearchContacts->append(m_pBaseContacts->at(i));
 
         }else{
 
+
+            if(true==m_pBaseContacts->at(i)->getPhoneNumber().contains(keyword)){
+                m_pBaseContacts->at(i)->setSearchByType(SearchByPhoneNumber);
+                m_pBaseContacts->at(i)->getMatchKeywords()->clear();
+                m_pBaseContacts->at(i)->getMatchKeywords()->append(keyword);
+                int matchStartIndex=m_pBaseContacts->at(i)->getPhoneNumber().indexOf(keyword);
+                qDebug()<<"matchStartIndex "<<matchStartIndex;
+                m_pBaseContacts->at(i)->setMatchStartIndex(matchStartIndex);
+                m_pBaseContacts->at(i)->setMatchLength(keyword.length());
+                m_pSearchContacts->append(m_pBaseContacts->at(i));
+            }
+
         }
     }
-    return;
-}
 
+    if(m_pSearchContacts->size()<=0){
+        if (m_pSearchContacts->length() <= 0) {
+            m_pFirstNoSearchResultInput->append(keyword);
+            qDebug()<<"no search result,null!=search,mFirstNoSearchResultInput.length()="
+                   <<m_pFirstNoSearchResultInput->length()<<"["
+                   <<*m_pFirstNoSearchResultInput<<"]"<<";searchlen="<<keyword.length()<<"["<<keyword<<"]";
+        }
+    }else{
+        //sort
+    }
+    return;
+
+
+}
 
 
 
 void ContactsHelper::initContactsHelper()
 {
-    if(NULL==baseContacts){
-        baseContacts=new QList<Contacts>;
+    if(NULL==m_pBaseContacts){
+        m_pBaseContacts=new QList<Contacts*>;
+    }
+
+    if(NULL==m_pSearchContacts){
+        m_pSearchContacts=new QList<Contacts*>;
+    }
+
+    if(NULL==m_pFirstNoSearchResultInput){
+        m_pFirstNoSearchResultInput=new QString();
     }
     // qDebug()<<"["<<"initContactsHelper"<<"]";
 }
 
 void ContactsHelper::freeContactsHelper()
 {
-    if(NULL!=baseContacts){
-        baseContacts->clear();
+    if(NULL!=m_pBaseContacts){
+        m_pBaseContacts->clear();
         //qDeleteAll(baseContacts)
-        baseContacts=NULL;
+        m_pBaseContacts=NULL;
     }
     //qDebug()<<"["<<"freeContactsHelper"<<"]";
 }

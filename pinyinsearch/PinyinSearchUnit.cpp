@@ -15,7 +15,7 @@
  */
 
 #include "PinyinSearchUnit.h"
-#include <QDebug>
+//#include <QDebug>
 
 PinyinSearchUnit::PinyinSearchUnit()
 {
@@ -63,6 +63,8 @@ void PinyinSearchUnit::setMatchKeyWord(QString *pMatchKeyWord)
 
 void PinyinSearchUnit::show()
 {
+
+    /*
      qDebug()<<"getBaseData["<<this->getBaseData()<<"]this->getPinyinUnits()->size()["<<this->getPinyinUnits()->size()<<"]MatchKeyWord["<<this->getMatchKeyWord()<<"]";
     QList<PinyinUnit> *pinyinUnitList= this->getPinyinUnits();
 
@@ -74,6 +76,7 @@ void PinyinSearchUnit::show()
         }
     }
      qDebug()<<"****************************************************";
+     */
 }
 
 

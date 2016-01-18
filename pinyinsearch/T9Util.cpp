@@ -15,7 +15,7 @@
  */
 
 #include "T9Util.h"
-#include <QDebug>
+//#include <QDebug>
 
 /**
  * @brief T9Util::getT9Number
@@ -128,13 +128,13 @@ QChar T9Util::getT9Number(QChar &alphabet)
 
 bool T9Util::match(PinyinSearchUnit &pinyinSearchUnit, QString &search)
 {
-    qDebug()<<"match()111getBaseData["<<pinyinSearchUnit.getBaseData()<<"]";
-    qDebug()<<"match()222getMatchKeyWord["<<*pinyinSearchUnit.getMatchKeyWord()<<"]";
+    //qDebug()<<"match()111getBaseData["<<pinyinSearchUnit.getBaseData()<<"]";
+    //qDebug()<<"match()222getMatchKeyWord["<<*pinyinSearchUnit.getMatchKeyWord()<<"]";
     if((NULL==pinyinSearchUnit.getBaseData())/*||(NULL==pinyinSearchUnit.getMatchKeyWord())*/){
         return false;
     }
     pinyinSearchUnit.getMatchKeyWord()->clear();
-    qDebug()<<"match()333getMatchKeyWord["<<*pinyinSearchUnit.getMatchKeyWord();
+    //qDebug()<<"match()333getMatchKeyWord["<<*pinyinSearchUnit.getMatchKeyWord();
     int pinyinUnitsLength=pinyinSearchUnit.getPinyinUnits()->size();
     QString *pSearchString=new QString();
     for(int i=0; i<pinyinUnitsLength; i++){
@@ -144,12 +144,12 @@ bool T9Util::match(PinyinSearchUnit &pinyinSearchUnit, QString &search)
         pSearchString->append(search);
         bool found= T9Util::findPinyinUnits(pinyinSearchUnit.getPinyinUnits(),i,j,pinyinSearchUnit.getBaseData(),pSearchString,pinyinSearchUnit.getMatchKeyWord());
         if (true == found){
-             qDebug()<<"match()444 true getMatchKeyWord["<<*pinyinSearchUnit.getMatchKeyWord();
+             //qDebug()<<"match()444 true getMatchKeyWord["<<*pinyinSearchUnit.getMatchKeyWord();
             return true;
         }
     }
 
-    qDebug()<<"match()555 false getMatchKeyWord["<<*pinyinSearchUnit.getMatchKeyWord();
+    //qDebug()<<"match()555 false getMatchKeyWord["<<*pinyinSearchUnit.getMatchKeyWord();
 
     return false;
 }
@@ -167,25 +167,25 @@ bool T9Util::match(PinyinSearchUnit &pinyinSearchUnit, QString &search)
 bool T9Util::findPinyinUnits(QList<PinyinUnit> *pPinyinUnits, int pinyinUnitIndex, int t9PinyinUnitIndex, QString &baseData, QString *pSearchString, QString *pKeyWord)
 {
     if((NULL==pPinyinUnits)||(NULL==pSearchString)||(NULL==pKeyWord)){
-        qDebug()<<"__LINE__"<<__LINE__<<":false";
+        //qDebug()<<"__LINE__"<<__LINE__<<":false";
         return false;
     }
 
     QString searchKeyWord=QString(*pSearchString);
     if(searchKeyWord.length()<=0){//match success
 
-        qDebug()<<"__LINE__"<<__LINE__<<":true";
+        //qDebug()<<"__LINE__"<<__LINE__<<":true";
         return true;
     }
 
     if(pinyinUnitIndex>=pPinyinUnits->length()){
-         qDebug()<<"__LINE__"<<__LINE__<<":false";
+         //qDebug()<<"__LINE__"<<__LINE__<<":false";
         return false;
     }
 
     PinyinUnit pyUnit=pPinyinUnits->at(pinyinUnitIndex);
     if(t9PinyinUnitIndex>=pyUnit.getPinyinBaseUnitIndex()->length()){
-         qDebug()<<"__LINE__"<<__LINE__<<":false";
+         //qDebug()<<"__LINE__"<<__LINE__<<":false";
         return false;
     }
 
@@ -196,7 +196,7 @@ bool T9Util::findPinyinUnits(QList<PinyinUnit> *pPinyinUnits, int pinyinUnitInde
             pKeyWord->append(baseData.at(pyUnit.getStartPosition()));
             bool found=T9Util::findPinyinUnits(pPinyinUnits, pinyinUnitIndex+1, 0, baseData, pSearchString,pKeyWord);
             if(true==found){
-                 qDebug()<<"__LINE__"<<__LINE__<<":true";
+                 //qDebug()<<"__LINE__"<<__LINE__<<":true";
                 return true;
             }else{
               pSearchString->insert(0, pinyinBaseUnit.getNumber().at(0));
@@ -209,7 +209,7 @@ bool T9Util::findPinyinUnits(QList<PinyinUnit> *pPinyinUnits, int pinyinUnitInde
             //The string of "searchKeyWord" is the string of t9PinyinUnit.getNumber() of a subset. means match success.
            pKeyWord->append(baseData.at(pyUnit.getStartPosition()));
            pSearchString->remove(0, pSearchString->length());
-            qDebug()<<"__LINE__"<<__LINE__<<":true";
+            //qDebug()<<"__LINE__"<<__LINE__<<":true";
             return true;
 
         }else if(searchKeyWord.startsWith(pinyinBaseUnit.getNumber())){ //match quanpin  success
@@ -219,7 +219,7 @@ bool T9Util::findPinyinUnits(QList<PinyinUnit> *pPinyinUnits, int pinyinUnitInde
            pKeyWord->append(baseData.at(pyUnit.getStartPosition()));
             bool found=findPinyinUnits(pPinyinUnits, pinyinUnitIndex+1, 0, baseData, pSearchString,pKeyWord);
             if(true==found){
-                 qDebug()<<"__LINE__"<<__LINE__<<":true";
+                 //qDebug()<<"__LINE__"<<__LINE__<<":true";
                 return true;
             }else{
                pSearchString->insert(0, pinyinBaseUnit.getNumber());
@@ -229,7 +229,7 @@ bool T9Util::findPinyinUnits(QList<PinyinUnit> *pPinyinUnits, int pinyinUnitInde
         }else{ //mismatch
             bool found=findPinyinUnits(pPinyinUnits, pinyinUnitIndex, t9PinyinUnitIndex+1, baseData, pSearchString,pKeyWord);
             if(found==true){
-                 qDebug()<<"__LINE__"<<__LINE__<<":true";
+                 //qDebug()<<"__LINE__"<<__LINE__<<":true";
                 return true;
             }
         }
@@ -239,14 +239,14 @@ bool T9Util::findPinyinUnits(QList<PinyinUnit> *pPinyinUnits, int pinyinUnitInde
         if(pinyinBaseUnit.getNumber().startsWith(searchKeyWord)){
             //The string of "searchKeyWord" is the string of t9PinyinUnit.getNumber() of a subset.
             int startIndex=0;
-           qDebug()<<" searchKeyWord:"<<searchKeyWord;
-           qDebug()<<" before pKeyWord:"<<*pKeyWord;
-           qDebug()<<" baseData:"<<baseData;
+           //qDebug()<<" searchKeyWord:"<<searchKeyWord;
+           //qDebug()<<" before pKeyWord:"<<*pKeyWord;
+           //qDebug()<<" baseData:"<<baseData;
            pKeyWord->append(baseData.mid(startIndex+pyUnit.getStartPosition(),/*startIndex+pyUnit.getStartPosition()+ */searchKeyWord.length()));
 
            pSearchString->remove(0, pSearchString->length());
-           qDebug()<<" after pKeyWord:"<<*pKeyWord;
-            qDebug()<<"__LINE__"<<__LINE__<<":true";
+           //qDebug()<<" after pKeyWord:"<<*pKeyWord;
+            //qDebug()<<"__LINE__"<<__LINE__<<":true";
             return true;
         }else if(searchKeyWord.startsWith(pinyinBaseUnit.getNumber())){ //match all non-pure pinyin
             //The string of t9PinyinUnit.getNumber() is the string of "searchKeyWord" of a subset.
@@ -256,7 +256,7 @@ bool T9Util::findPinyinUnits(QList<PinyinUnit> *pPinyinUnits, int pinyinUnitInde
            pKeyWord->append(baseData.mid(startIndex+pyUnit.getStartPosition(),/*startIndex+pyUnit.getStartPosition()+*/ pinyinBaseUnit.getNumber().length()));
             bool found=findPinyinUnits(pPinyinUnits, pinyinUnitIndex+1, 0, baseData, pSearchString,pKeyWord);
             if(true==found){
-                qDebug()<<"__LINE__"<<__LINE__<<":true";
+                //qDebug()<<"__LINE__"<<__LINE__<<":true";
                 return true;
             }else{
                 pSearchString->insert(0, pinyinBaseUnit.getNumber());
@@ -267,7 +267,7 @@ bool T9Util::findPinyinUnits(QList<PinyinUnit> *pPinyinUnits, int pinyinUnitInde
                 int index=pinyinBaseUnit.getNumber().indexOf(searchKeyWord);
                pKeyWord->append(baseData.mid(index+pyUnit.getStartPosition(),/*index+pyUnit.getStartPosition()+*/searchKeyWord.length()));
                 pSearchString->remove(0, pSearchString->length());
-                 qDebug()<<"__LINE__"<<__LINE__<<":true";
+                 //qDebug()<<"__LINE__"<<__LINE__<<":true";
                 return true;
             }else{
                 // match case:[Non-Chinese characters]+[Chinese characters]
@@ -281,7 +281,7 @@ bool T9Util::findPinyinUnits(QList<PinyinUnit> *pPinyinUnits, int pinyinUnitInde
                        pKeyWord->append(baseData.mid(i+pyUnit.getStartPosition(),/* i+pyUnit.getStartPosition()+*/subStr.length()));
                         bool found=findPinyinUnits(pPinyinUnits, pinyinUnitIndex+1, 0, baseData, pSearchString,pKeyWord);
                         if(true==found){
-                             qDebug()<<"__LINE__"<<__LINE__<<":true";
+                             //qDebug()<<"__LINE__"<<__LINE__<<":true";
                             return true;
                         }else{
                            pSearchString->insert(0, pinyinBaseUnit.getNumber().mid(i));
@@ -295,7 +295,7 @@ bool T9Util::findPinyinUnits(QList<PinyinUnit> *pPinyinUnits, int pinyinUnitInde
                 //in fact,if pyUnit.isPinyin()==false, pyUnit.getPinyinBaseUnitIndex().size()==1. The function of findPinyinUnits() will return false.
                 bool found=findPinyinUnits(pPinyinUnits, pinyinUnitIndex, t9PinyinUnitIndex+1, baseData, pSearchString,pKeyWord);
                 if(true==found){
-                     qDebug()<<"__LINE__"<<__LINE__<<":true";
+                     //qDebug()<<"__LINE__"<<__LINE__<<":true";
                     return true;
                 }
             }
@@ -303,11 +303,11 @@ bool T9Util::findPinyinUnits(QList<PinyinUnit> *pPinyinUnits, int pinyinUnitInde
             //in fact,if pyUnit.isPinyin()==false, pyUnit.getPinyinBaseUnitIndex().size()==1.  The function of findPinyinUnits() will return false.
             bool found=findPinyinUnits(pPinyinUnits, pinyinUnitIndex, t9PinyinUnitIndex+1, baseData, pSearchString,pKeyWord);
             if(true==found){
-                 qDebug()<<"__LINE__"<<__LINE__<<":true";
+                 //qDebug()<<"__LINE__"<<__LINE__<<":true";
                 return true;
             }
         }
         }
-     qDebug()<<"__LINE__"<<__LINE__<<":false";
+     //qDebug()<<"__LINE__"<<__LINE__<<":false";
     return false;
 }

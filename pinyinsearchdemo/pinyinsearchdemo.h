@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <QPushButton>
 #include <QTextEdit>
+#include <QLabel>
+#include "T9KeyboardWidget.h"
 
 class PinyinSearchDemo : public QWidget
 {
@@ -17,8 +19,16 @@ private slots:
     void qwertySearch();
     void slot_inputTextEditText(const QString &);
 private:
-    QTextEdit *searchTextEdit;
-    QPushButton *qwertySearchBtn;
+    QString *m_pBaseData;
+    QString *m_pSearchData;
+
+    T9KeyboardWidget *m_pT9KeyboardWidget;
+    QTextEdit *m_pQwertySearchTextEdit;
+    QLabel *m_pBaseDataLabel;
+    QLabel *m_pSearchDataLabel;
+    void refreshSearchData();
+
+
 };
 
 #endif // PINYINSEARCHDEMO_H

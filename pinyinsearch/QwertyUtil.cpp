@@ -15,7 +15,7 @@
  */
 
 #include "QwertyUtil.h"
-#include <QDebug>
+//#include <QDebug>
 
 /**
  * @brief QwertyUtil::match
@@ -70,25 +70,25 @@ bool QwertyUtil::match(PinyinSearchUnit &pinyinSearchUnit, QString &search)
 bool QwertyUtil::findPinyinUnits(QList<PinyinUnit> *pPinyinUnits, int pinyinUnitIndex, int qwertyPinyinUnitIndex, QString &baseData, QString *pSearchString, QString *pKeyWord)
 {
     if((NULL==pPinyinUnits)||(NULL==pSearchString)||(NULL==pKeyWord)){
-        qDebug()<<"__LINE__"<<__LINE__<<":false";
+        //qDebug()<<"__LINE__"<<__LINE__<<":false";
         return false;
     }
 
     QString searchKeyWord=QString(*pSearchString);
     if(searchKeyWord.length()<=0){//match success
 
-        qDebug()<<"__LINE__"<<__LINE__<<":true";
+        //qDebug()<<"__LINE__"<<__LINE__<<":true";
         return true;
     }
 
     if(pinyinUnitIndex>=pPinyinUnits->length()){
-        qDebug()<<"__LINE__"<<__LINE__<<":false";
+        //qDebug()<<"__LINE__"<<__LINE__<<":false";
         return false;
      }
 
      PinyinUnit pyUnit=pPinyinUnits->at(pinyinUnitIndex);
      if(qwertyPinyinUnitIndex>=pyUnit.getPinyinBaseUnitIndex()->length()){
-          qDebug()<<"__LINE__"<<__LINE__<<":false";
+          //qDebug()<<"__LINE__"<<__LINE__<<":false";
           return false;
      }
 
