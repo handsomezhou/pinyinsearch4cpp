@@ -58,39 +58,39 @@
  */
 PinyinUnit::PinyinUnit()
 {
-    this->pinyin=false;
-    this->startPosition=-1;
-    this->pinyinBaseUnitIndex=new QList<PinyinBaseUnit>();
+    this->mPinyin=false;
+    this->mStartPosition=-1;
+    this->m_pPinyinBaseUnitIndexdex=new QList<PinyinBaseUnit*>();
 }
 
 bool PinyinUnit::isPinyin() const
 {
-    return this->pinyin;
+    return this->mPinyin;
 }
 
 void PinyinUnit::setPinyin(bool pinyin)
 {
-    this->pinyin=pinyin;
+    this->mPinyin=pinyin;
 }
 
 int PinyinUnit::getStartPosition() const
 {
-    return this->startPosition;
+    return this->mStartPosition;
 }
 
 void PinyinUnit::setStartPosition(int startPosition)
 {
-    this->startPosition=startPosition;
+    this->mStartPosition=startPosition;
 }
 
-QList<PinyinBaseUnit> *PinyinUnit::getPinyinBaseUnitIndex() const
+QList<PinyinBaseUnit*> *PinyinUnit::getPinyinBaseUnitIndex() const
 {
-    return this->pinyinBaseUnitIndex;
+    return this->m_pPinyinBaseUnitIndexdex;
 }
 
-void PinyinUnit::setPinyinBaseUnitIndex(QList<PinyinBaseUnit> *pinyinBaseUnitIndex)
+void PinyinUnit::setPinyinBaseUnitIndex(QList<PinyinBaseUnit*> *pinyinBaseUnitIndex)
 {
-    this->pinyinBaseUnitIndex = pinyinBaseUnitIndex;
+    this->m_pPinyinBaseUnitIndexdex = pinyinBaseUnitIndex;
 }
 
 

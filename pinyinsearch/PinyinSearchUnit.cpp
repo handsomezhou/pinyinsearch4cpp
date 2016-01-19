@@ -19,34 +19,34 @@
 
 PinyinSearchUnit::PinyinSearchUnit()
 {
-    this->pinyinUnits=new  QList<PinyinUnit>();
+    this->m_pPinyinUnits=new  QList<PinyinUnit*>();
     this->m_pMatchKeyWord=new QString();
 }
 
 PinyinSearchUnit::PinyinSearchUnit(QString baseData)
 {
-    this->baseData=baseData;
-    this->pinyinUnits=new  QList<PinyinUnit>();
+    this->mBaseData=baseData;
+    this->m_pPinyinUnits=new  QList<PinyinUnit*>();
 }
 
 QString &PinyinSearchUnit::getBaseData()
 {
-    return this->baseData;
+    return this->mBaseData;
 }
 
 void PinyinSearchUnit::setBaseData(const QString &baseData)
 {
-    this->baseData = baseData;
+    this->mBaseData = baseData;
 }
 
-QList<PinyinUnit> *PinyinSearchUnit::getPinyinUnits() const
+QList<PinyinUnit*> *PinyinSearchUnit::getPinyinUnits() const
 {
-    return pinyinUnits;
+    return m_pPinyinUnits;
 }
 
-void PinyinSearchUnit::setPinyinUnits(QList<PinyinUnit> *pinyinUnits)
+void PinyinSearchUnit::setPinyinUnits(QList<PinyinUnit*> *pPinyinUnits)
 {
-    this->pinyinUnits = pinyinUnits;
+    this->m_pPinyinUnits = pPinyinUnits;
 }
 
 QString *PinyinSearchUnit::getMatchKeyWord() const

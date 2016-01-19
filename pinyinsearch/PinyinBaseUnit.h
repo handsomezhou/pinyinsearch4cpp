@@ -42,9 +42,9 @@ public:
     void setNumber(const QString &number);
 
 private:
-    QString originalString;
-    QString pinyin;
-    QString number;
+    QString mOriginalString;
+    QString mPinyin;
+    QString mNumber;
 
 };
 

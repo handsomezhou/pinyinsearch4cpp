@@ -67,7 +67,7 @@ bool QwertyUtil::match(PinyinSearchUnit &pinyinSearchUnit, QString &search)
  * @param pKeyWord                      save the keyword.
  * @return                              true if find,false otherwise.
  */
-bool QwertyUtil::findPinyinUnits(QList<PinyinUnit> *pPinyinUnits, int pinyinUnitIndex, int qwertyPinyinUnitIndex, QString &baseData, QString *pSearchString, QString *pKeyWord)
+bool QwertyUtil::findPinyinUnits(QList<PinyinUnit*> *pPinyinUnits, int pinyinUnitIndex, int qwertyPinyinUnitIndex, QString &baseData, QString *pSearchString, QString *pKeyWord)
 {
     if((NULL==pPinyinUnits)||(NULL==pSearchString)||(NULL==pKeyWord)){
         //qDebug()<<"__LINE__"<<__LINE__<<":false";
@@ -86,44 +86,44 @@ bool QwertyUtil::findPinyinUnits(QList<PinyinUnit> *pPinyinUnits, int pinyinUnit
         return false;
      }
 
-     PinyinUnit pyUnit=pPinyinUnits->at(pinyinUnitIndex);
-     if(qwertyPinyinUnitIndex>=pyUnit.getPinyinBaseUnitIndex()->length()){
+     PinyinUnit *pPyUnit=pPinyinUnits->at(pinyinUnitIndex);
+     if(qwertyPinyinUnitIndex>=pPyUnit->getPinyinBaseUnitIndex()->length()){
           //qDebug()<<"__LINE__"<<__LINE__<<":false";
           return false;
      }
 
-     PinyinBaseUnit pinyinBaseUnit = pyUnit.getPinyinBaseUnitIndex()->at(qwertyPinyinUnitIndex);
+     PinyinBaseUnit *pPinyinBaseUnit = pPyUnit->getPinyinBaseUnitIndex()->at(qwertyPinyinUnitIndex);
 
-     if (pyUnit.isPinyin()) {
+     if (pPyUnit->isPinyin()) {
 
-         if (searchKeyWord.startsWith(pinyinBaseUnit.getPinyin().at(0))) {// match pinyin first character
+         if (searchKeyWord.startsWith(pPinyinBaseUnit->getPinyin().at(0))) {// match pinyin first character
              pSearchString->remove(0, 1);// delete the match character
-             pKeyWord->append(baseData.at(pyUnit.getStartPosition()));
+             pKeyWord->append(baseData.at(pPyUnit->getStartPosition()));
              bool found = QwertyUtil::findPinyinUnits(pPinyinUnits,pinyinUnitIndex + 1, 0, baseData, pSearchString,pKeyWord);
              if (true == found) {
                  return true;
              } else {
-                 pSearchString->insert(0, pinyinBaseUnit.getPinyin().at(0));
+                 pSearchString->insert(0, pPinyinBaseUnit->getPinyin().at(0));
                  pKeyWord->remove(pKeyWord->length() - 1,1);
              }
 
          }
 
-         if (pinyinBaseUnit.getPinyin().startsWith(searchKeyWord)) {
-             // The string of "searchKeyWord" is the string of pinyinBaseUnit.getPinyin() of a subset. means match success.
-             pKeyWord->append(baseData.at(pyUnit.getStartPosition()));
+         if (pPinyinBaseUnit->getPinyin().startsWith(searchKeyWord)) {
+             // The string of "searchKeyWord" is the string of pPinyinBaseUnit->getPinyin() of a subset. means match success.
+             pKeyWord->append(baseData.at(pPyUnit->getStartPosition()));
              pSearchString->remove(0, pSearchString->length());
              return true;
 
-         } else if (searchKeyWord.startsWith(pinyinBaseUnit.getPinyin())) { // match quanpin success
-             // The string of pinyinBaseUnit.getPinyin() is the string of "searchKeyWord" of a subset.
-             pSearchString->remove(0, pinyinBaseUnit.getPinyin().length());
-             pKeyWord->append(baseData.at(pyUnit.getStartPosition()));
+         } else if (searchKeyWord.startsWith(pPinyinBaseUnit->getPinyin())) { // match quanpin success
+             // The string of pPinyinBaseUnit->getPinyin() is the string of "searchKeyWord" of a subset.
+             pSearchString->remove(0, pPinyinBaseUnit->getPinyin().length());
+             pKeyWord->append(baseData.at(pPyUnit->getStartPosition()));
              bool found = findPinyinUnits(pPinyinUnits,pinyinUnitIndex+1, 0, baseData, pSearchString,pKeyWord);
              if (true == found) {
                  return true;
              } else {
-                 pSearchString->insert(0, pinyinBaseUnit.getPinyin());
+                 pSearchString->insert(0, pPinyinBaseUnit->getPinyin());
                  pKeyWord->remove(pKeyWord->length()-1,1);
              }
          } else { // mismatch
@@ -134,45 +134,45 @@ bool QwertyUtil::findPinyinUnits(QList<PinyinUnit> *pPinyinUnits, int pinyinUnit
          }
 
      } else { // non-pure Pinyin
-         if (pinyinBaseUnit.getPinyin().startsWith(searchKeyWord)) {
-             // The string of "searchKeyWord" is the string of pinyinBaseUnit.getPinyin() of a subset.
+         if (pPinyinBaseUnit->getPinyin().startsWith(searchKeyWord)) {
+             // The string of "searchKeyWord" is the string of pPinyinBaseUnit->getPinyin() of a subset.
              int startIndex = 0;
-             pKeyWord->append(baseData.mid(startIndex+pyUnit.getStartPosition(),/* startIndex+pyUnit.getStartPosition() + */searchKeyWord.length()));
+             pKeyWord->append(baseData.mid(startIndex+pPyUnit->getStartPosition(),/* startIndex+pyUnit.getStartPosition() + */searchKeyWord.length()));
              pSearchString->remove(0, pSearchString->length());
              return true;
-         } else if (searchKeyWord.startsWith(pinyinBaseUnit.getPinyin())) { // match all non-pure pinyin
-             // The string of pinyinBaseUnit.getPinyin() is the string of "searchKeyWord" of a subset.
+         } else if (searchKeyWord.startsWith(pPinyinBaseUnit->getPinyin())) { // match all non-pure pinyin
+             // The string of pPinyinBaseUnit->getPinyin() is the string of "searchKeyWord" of a subset.
              int startIndex = 0;
-             pSearchString->remove(0, pinyinBaseUnit.getPinyin().length());
-             pKeyWord->append(baseData.mid(startIndex+pyUnit.getStartPosition(),/*startIndex+pyUnit.getStartPosition()+*/pinyinBaseUnit.getPinyin().length()));
+             pSearchString->remove(0, pPinyinBaseUnit->getPinyin().length());
+             pKeyWord->append(baseData.mid(startIndex+pPyUnit->getStartPosition(),/*startIndex+pyUnit.getStartPosition()+*/pPinyinBaseUnit->getPinyin().length()));
              bool found = findPinyinUnits(pPinyinUnits,pinyinUnitIndex+1, 0, baseData, pSearchString,pKeyWord);
              if (true == found) {
                  return true;
              } else {
-                 pSearchString->insert(0, pinyinBaseUnit.getPinyin());
-                 pKeyWord->remove(pKeyWord->length()-pinyinBaseUnit.getPinyin().length(),pKeyWord->length());
+                 pSearchString->insert(0, pPinyinBaseUnit->getPinyin());
+                 pKeyWord->remove(pKeyWord->length()-pPinyinBaseUnit->getPinyin().length(),pKeyWord->length());
              }
          } else if ((pKeyWord->length() <= 0)) {
-             if (pinyinBaseUnit.getPinyin().contains(searchKeyWord)) {
-                 int index = pinyinBaseUnit.getPinyin().indexOf(searchKeyWord);
-                 pKeyWord->append(baseData.mid(index+pyUnit.getStartPosition(),/*index+pyUnit.getStartPosition()+*/searchKeyWord.length()));
+             if (pPinyinBaseUnit->getPinyin().contains(searchKeyWord)) {
+                 int index = pPinyinBaseUnit->getPinyin().indexOf(searchKeyWord);
+                 pKeyWord->append(baseData.mid(index+pPyUnit->getStartPosition(),/*index+pyUnit.getStartPosition()+*/searchKeyWord.length()));
                  pSearchString->remove(0, pSearchString->length());
                  return true;
              } else {
                  // match case:[Non-Chinese characters]+[Chinese characters]
                  // for example:baseData="Tony测试"; match this case:"onycs"
                  // start [Non-Chinese characters]+[Chinese characters]
-                 int numLength = pinyinBaseUnit.getPinyin().length();
+                 int numLength = pPinyinBaseUnit->getPinyin().length();
                  for (int i = 0; i < numLength; i++) {
-                     QString subStr = pinyinBaseUnit.getPinyin().mid(i);
+                     QString subStr = pPinyinBaseUnit->getPinyin().mid(i);
                      if (searchKeyWord.startsWith(subStr)) {
                          pSearchString->remove(0, subStr.length());
-                         pKeyWord->append(baseData.mid(i+pyUnit.getStartPosition(),/*i+pyUnit.getStartPosition()+*/subStr.length()));
+                         pKeyWord->append(baseData.mid(i+pPyUnit->getStartPosition(),/*i+pyUnit.getStartPosition()+*/subStr.length()));
                          bool found = findPinyinUnits(pPinyinUnits,pinyinUnitIndex+1, 0, baseData,pSearchString, pKeyWord);
                          if (true == found) {
                              return true;
                          } else {
-                             pSearchString->insert(0, pinyinBaseUnit.getPinyin().mid(i));
+                             pSearchString->insert(0, pPinyinBaseUnit->getPinyin().mid(i));
                              pKeyWord->remove(pKeyWord->length()-subStr.length(),pKeyWord->length());
                          }
 

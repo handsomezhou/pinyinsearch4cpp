@@ -6,6 +6,7 @@
 #include "../../pinyinsearch/QwertyUtil.h"
 #include "../../pinyinsearch/PinyinUtil.h"
 #include "../../pinyinsearch/PinyinSearchUnit.h"
+#include <QDebug>
 
 
 ContactsHelper* ContactsHelper::instance=NULL;
@@ -34,10 +35,9 @@ ContactsHelper *ContactsHelper::getInstance()
 
 void ContactsHelper::loadContacts()
 {
-    for(int i=0;i<10; i++){
+    for(int i=0;i<8; i++){
         Contacts *cs = new Contacts();
-        //QString name=QString("test周俊tO%1权").arg(i);
-        QString name=QString("test周I俊tony%1").arg(i);
+        QString name=(i%2==0)?QString("tony%1苹果香蕉栗子tony").arg(i):QString("西瓜sam%1苹果梨子sam").arg(i);
         QString phoneNumber=QString("0000000000%1").arg(i);
         cs->setName(name);
         cs->setPhoneNumber(phoneNumber);
@@ -45,6 +45,16 @@ void ContactsHelper::loadContacts()
         PinyinUtil::parse(*cs->getNamePinyinSearchUnit());
         cs->getNamePinyinSearchUnit()->show();
         m_pBaseContacts->append(cs);
+        PinyinSearchUnit *psu=new PinyinSearchUnit();
+//        qDebug()<<"getFirstLetter:"<<PinyinUtil::getFirstLetter(*cs->getNamePinyinSearchUnit());
+//        qDebug()<<"getFirstCharacter:"<<PinyinUtil::getFirstCharacter(*cs->getNamePinyinSearchUnit());
+//        qDebug()<<"getSortKey:"<<PinyinUtil::getSortKey(*cs->getNamePinyinSearchUnit());
+        QString str=PinyinUtil::getFirstCharacter(*cs->getNamePinyinSearchUnit());
+        QChar chr='k';
+        if(NULL!=str){
+            chr=str.at(0);
+        }
+        qDebug()<<"isKanji:"<<"chr["<<chr<<"]"<<PinyinUtil::isKanji(chr);
     }
 
     /*

@@ -31,7 +31,7 @@ public:
     static bool isKanji(QChar &chr);
 private:
     static HanyuPinyinOutputFormat *format;
-    static void addPinyinUnit(QList<PinyinUnit> *pinyinUnit,PinyinUnit *pyUnit, bool pinyin, QString originalString,QList<QString> *string, int startPosition);
+    static void addPinyinUnit(QList<PinyinUnit*> *pinyinUnit,PinyinUnit *pyUnit, bool pinyin, QString originalString,QList<QString> *string, int startPosition);
     static void initPinyinUnit(PinyinUnit *pyUnit, bool pinyin, QString originalString,QList<QString> *string, int startPosition);
     static void initPinyinBaseUnit(PinyinBaseUnit *pinyinBaseUnit, QString originalString, QString pinyin);
 };

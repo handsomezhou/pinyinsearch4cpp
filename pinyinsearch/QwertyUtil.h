@@ -24,7 +24,7 @@ class PINYINSEARCHSHARED_EXPORT QwertyUtil
 public:
    static bool match(PinyinSearchUnit &pinyinSearchUnit,QString &search);
 private:
-   static bool findPinyinUnits(QList<PinyinUnit> *pPinyinUnits,int pinyinUnitIndex,int qwertyPinyinUnitIndex,QString &baseData, QString *pSearchString,QString *pKeyWord );
+   static bool findPinyinUnits(QList<PinyinUnit*> *pPinyinUnits,int pinyinUnitIndex,int qwertyPinyinUnitIndex,QString &baseData, QString *pSearchString,QString *pKeyWord );
 
 };
 #endif // QWERTYUTIL_H

@@ -24,39 +24,39 @@ PinyinBaseUnit::PinyinBaseUnit()
 
 PinyinBaseUnit::PinyinBaseUnit(QString originalString, QString pinyin, QString number)
 {
-    this->originalString=originalString;
-    this->pinyin = pinyin;
-    this->number = number;
+    this->mOriginalString=originalString;
+    this->mPinyin = pinyin;
+    this->mNumber = number;
 }
 
 QString PinyinBaseUnit::getOriginalString() const
 {
-    return originalString;
+    return mOriginalString;
 }
 
 void PinyinBaseUnit::setOriginalString(const QString &originalString)
 {
-    this->originalString = originalString;
+    this->mOriginalString = originalString;
 }
 
 QString PinyinBaseUnit::getPinyin() const
 {
-    return pinyin;
+    return mPinyin;
 }
 
 void PinyinBaseUnit::setPinyin(const QString &pinyin)
 {
-    this->pinyin = pinyin;
+    this->mPinyin = pinyin;
 }
 
 QString PinyinBaseUnit::getNumber() const
 {
-    return number;
+    return mNumber;
 }
 
 void PinyinBaseUnit::setNumber(const QString &number)
 {
-    this->number = number;
+    this->mNumber = number;
 
 }
 

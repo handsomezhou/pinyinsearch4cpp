@@ -30,16 +30,16 @@ public:
 
 //    QList<PinyinBaseUnit> getPinyinBaseUnitIndex() const;
 //    void setPinyinBaseUnitIndex(const QList<PinyinBaseUnit> &pinyinBaseUnitIndex);
-    QList<PinyinBaseUnit> *getPinyinBaseUnitIndex() const;
-    void setPinyinBaseUnitIndex(QList<PinyinBaseUnit> *pinyinBaseUnitIndex);
+    QList<PinyinBaseUnit*> *getPinyinBaseUnitIndex() const;
+    void setPinyinBaseUnitIndex(QList<PinyinBaseUnit*> *pinyinBaseUnitIndex);
 
 private:
-    bool pinyin;//whether pinyin
-    int startPosition;//save starting index position that the variables in the original string.
+    bool mPinyin;//whether pinyin
+    int mStartPosition;//save starting index position that the variables in the original string.
     /*
      * save the string which single Chinese characters Pinyin(include Multiple Pinyin),or continuous non-kanji characters.
      * if mPinyinBaseUnitIndex.size not more than 1, it means the is not Polyphonic characters.
      */
-    QList<PinyinBaseUnit> *pinyinBaseUnitIndex;
+    QList<PinyinBaseUnit*> *m_pPinyinBaseUnitIndexdex;
 };
 #endif // PINYINUNIT_H
