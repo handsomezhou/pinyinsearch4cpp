@@ -29,11 +29,11 @@ Features
 Depend
 ---------------
 ### The library of pinyin4cpp: 
-	The [pinyin4cpp](https://github.com/handsomezhou/pinyin4cpp) is a c plus plus  library supporting convertion between Chinese characters and hanyu pinyin that based on Qt.
+	The 
+[pinyin4cpp](https://github.com/handsomezhou/pinyin4cpp) is a c plus plus  library supporting convertion between Chinese characters and hanyu pinyin that based on Qt.
 	
-	reference:[http://pinyin4j.sourceforge.net/](http://pinyin4j.sourceforge.net/)
-	
-
+	reference: 
+[http://pinyin4j.sourceforge.net/](http://pinyin4j.sourceforge.net/)
 API
 ---------------
 ### Data structure:PinyinUnit
