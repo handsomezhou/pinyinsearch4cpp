@@ -28,7 +28,7 @@ public:
     static QString getFirstLetter(PinyinSearchUnit &pinyinSearchUnit);
     static QString getFirstCharacter(PinyinSearchUnit &pinyinSearchUnit);
     static QString getSortKey(PinyinSearchUnit &pinyinSearchUnit);
-    static bool isKanji(QChar &chr);
+    static bool isChineseCharacter(QChar &chr);
 private:
     static HanyuPinyinOutputFormat *format;
     static void addPinyinUnit(QList<PinyinUnit*> *pinyinUnit,PinyinUnit *pyUnit, bool pinyin, QString originalString,QList<QString> *string, int startPosition);

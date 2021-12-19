@@ -44,7 +44,7 @@ API
     static QString getFirstLetter(PinyinSearchUnit &pinyinSearchUnit);
     static QString getFirstCharacter(PinyinSearchUnit &pinyinSearchUnit);
     static QString getSortKey(PinyinSearchUnit &pinyinSearchUnit);
-    static bool isKanji(QChar &chr);
+    static bool isChineseCharacter(QChar &chr);
 
 ### Function call:
 	PinyinUtil::parse(...);
@@ -53,7 +53,7 @@ API
 	PinyinUtil::getSortKey(...);
 	PinyinUtil::getFirstLetter(...);
 	PinyinUtil::getFirstCharacter(...);
-	PinyinUtil::isKanji(...);
+	PinyinUtil::isChineseCharacter(...);
 	
 Usage
 ---------------	

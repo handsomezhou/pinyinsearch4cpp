@@ -54,7 +54,7 @@ void ContactsHelper::loadContacts()
         if(NULL!=str){
             chr=str.at(0);
         }
-        qDebug()<<"isKanji:"<<"chr["<<chr<<"]"<<PinyinUtil::isKanji(chr);
+        qDebug()<<"isChineseCharacter:"<<"chr["<<chr<<"]"<<PinyinUtil::isChineseCharacter(chr);
     }
 
     /*

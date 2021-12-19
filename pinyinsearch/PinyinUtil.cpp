@@ -75,7 +75,7 @@ void PinyinUtil::parse(PinyinSearchUnit &pinyinSearchUnit)
             nonPinyinString.append(ch);
         } else {
             if (false == lastChineseCharacters) {
-                // add continuous non-kanji characters to PinyinUnit
+                // add continuous non-ChineseCharacter characters to PinyinUnit
                 originalString = nonPinyinString;
                 QList<QString> *str=new QList<QString>();
                 str->append(nonPinyinString);
@@ -97,7 +97,7 @@ void PinyinUtil::parse(PinyinSearchUnit &pinyinSearchUnit)
     }
 
         if (false == lastChineseCharacters) {
-            // add continuous non-kanji characters to PinyinUnit
+            // add continuous non-ChineseCharacter characters to PinyinUnit
             originalString = nonPinyinString;
             QList<QString> *str=new QList<QString>();
             str->append(nonPinyinString);
@@ -214,13 +214,13 @@ QString PinyinUtil::getSortKey(PinyinSearchUnit &pinyinSearchUnit)
 }
 
 /**
- * judge chr is kanji
+ * judge chr is Chinese Character
  *
- * @brief PinyinUtil::isKanji
+ * @brief PinyinUtil::isChineseCharacter
  * @param chr
- * @return Is kanji return true,otherwise return false.
+ * @return Is Chinese Character return true,otherwise return false.
  */
-bool PinyinUtil::isKanji(QChar &chr)
+bool PinyinUtil::isChineseCharacter(QChar &chr)
 {
 
     HanyuPinyinOutputFormat *outputFormat=new HanyuPinyinOutputFormat();

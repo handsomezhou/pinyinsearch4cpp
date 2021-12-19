@@ -37,7 +37,7 @@ private:
     bool mPinyin;//whether pinyin
     int mStartPosition;//save starting index position that the variables in the original string.
     /*
-     * save the string which single Chinese characters Pinyin(include Multiple Pinyin),or continuous non-kanji characters.
+     * save the string which single Chinese characters Pinyin(include Multiple Pinyin),or continuous non-ChineseCharacter characters.
      * if mPinyinBaseUnitIndex.size not more than 1, it means the is not Polyphonic characters.
      */
     QList<PinyinBaseUnit*> *m_pPinyinBaseUnitIndexdex;
